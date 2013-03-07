@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B5935A97-C127-4AB4-819C-FE83941C2C28}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SeaScanUAV</RootNamespace>
+    <AssemblyName>SeaScanUAV</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\glossy-3d-blue-plane.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BSE.Windows.Forms">
+      <HintPath>GMap.NET.WindowsForms\BSE.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV">
+      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.CV.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.GPU">
+      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.CV.GPU.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.ML">
+      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.CV.ML.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI">
+      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.Util">
+      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x86-gpu 2.4.2.1777\bin\Emgu.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.Core">
+      <HintPath>GMap.NET.WindowsForms\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms">
+      <HintPath>GMap.NET.WindowsForms\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="MediaSlider">
+      <HintPath>MediaSlider\bin\Release\MediaSlider.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms.Ribbon35, Version=3.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\System.Windows.Forms.Ribbon35.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="frmApplicationProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmApplicationProperties.Designer.cs">
+      <DependentUpon>frmApplicationProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationPropertyManager.cs" />
+    <Compile Include="frmCreateMission.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCreateMission.Designer.cs">
+      <DependentUpon>frmCreateMission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTargetSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTargetSelection.Designer.cs">
+      <DependentUpon>frmTargetSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSeaScanUAVMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSeaScanUAVMain.Designer.cs">
+      <DependentUpon>frmSeaScanUAVMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GMapMarkerPlane.cs" />
+    <Compile Include="GMapMarkerTarget.cs" />
+    <Compile Include="GMapMarkerWind.cs" />
+    <Compile Include="ImageStreamController.cs" />
+    <Compile Include="ImageStreamWriter.cs" />
+    <Compile Include="IMavLinkListener.cs" />
+    <Compile Include="IPrecisionTimerListener.cs" />
+    <Compile Include="IPropertyChangeListener.cs" />
+    <Compile Include="IVideoController.cs" />
+    <Compile Include="LogInfo.cs" />
+    <Compile Include="MAVlink\MavlinkCRC.cs" />
+    <Compile Include="MAVlink\MavlinkOther.cs" />
+    <Compile Include="MAVlink\MAVLinkTypes.cs" />
+    <Compile Include="MAVlink\MavlinkUtil.cs" />
+    <Compile Include="MissionController.cs" />
+    <Compile Include="MissionPlannerLogReader.cs" />
+    <Compile Include="ObjectRecogniser.cs" />
+    <Compile Include="PrecisionTimer.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ROISelectorImageBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ROISelectorImageBox.Designer.cs">
+      <DependentUpon>ROISelectorImageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webservice\Airframe.cs" />
+    <Compile Include="Webservice\Camera.cs" />
+    <Compile Include="Coordinate3D.cs" />
+    <Compile Include="frmUploadMission.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmUploadMission.Designer.cs">
+      <DependentUpon>frmUploadMission.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Webservice\ImageUtils.cs" />
+    <Compile Include="Webservice\Location.cs" />
+    <Compile Include="Webservice\Mission.cs" />
+    <Compile Include="Webservice\MissionPoint.cs" />
+    <Compile Include="Webservice\TargetType.cs" />
+    <Compile Include="Webservice\User.cs" />
+    <Compile Include="Webservice\WebServiceConsumer.cs" />
+    <Compile Include="WindInfo.cs" />
+    <EmbeddedResource Include="frmApplicationProperties.resx">
+      <DependentUpon>frmApplicationProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCreateMission.resx">
+      <DependentUpon>frmCreateMission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTargetSelection.resx">
+      <DependentUpon>frmTargetSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSeaScanUAVMain.resx">
+      <DependentUpon>frmSeaScanUAVMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmUploadMission.resx">
+      <DependentUpon>frmUploadMission.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Glossyblueplane.png" />
+    <None Include="Resources\dolphin30.png" />
+    <Content Include="Resources\glossy-3d-blue-plane.ico" />
+    <Content Include="OpenCV\cublas32_42_9.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\cudart32_42_9.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\cufft32_42_9.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\cvextern.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\npp32_42_9.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_calib3d242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_contrib242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_core242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_features2d242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_ffmpeg242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_flann242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_gpu242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_highgui242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_imgproc242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_legacy242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_ml242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_nonfree242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_objdetect242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_photo242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_stitching242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_video242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OpenCV\opencv_videostab242.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\configuration.png" />
+    <Content Include="Resources\Glossyblueplane.png" />
+    <Content Include="Resources\Green_N.png" />
+    <Content Include="Resources\Orange_N.png" />
+    <Content Include="Resources\Red_N.png" />
+    <None Include="Resources\seal30.png" />
+    <Content Include="Resources\shark30.png" />
+    <None Include="Resources\whale30.png" />
+    <Content Include="ZedGraph.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
