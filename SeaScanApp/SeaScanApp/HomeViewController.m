@@ -248,7 +248,7 @@
                     }
                 }
                 
-                topLabel.text = [NSString stringWithFormat:@"Last seen %@",spottedDate];
+                topLabel.text = [NSString stringWithFormat:@"Scanned %@",spottedDate];
                 bottomLabel.text = [NSString stringWithFormat:@"At %@",spottedLocation];
             }
         }

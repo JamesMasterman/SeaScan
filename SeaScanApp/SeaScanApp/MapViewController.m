@@ -23,26 +23,49 @@
     mapView.showsUserLocation = YES;
     mapView.mapType = MKMapTypeHybrid;
     
+    
+    self.updateTitles;
+    
     SSDataManager* dm = [SSDataManager getInstance];
     [dm addRefreshNotifier:^(RefreshTypes type)
      {
+         BOOL relocated = NO;
          if(type == MISSIONS)
          {
              [mapView removeOverlays:[mapView overlays]];
             //add each mission as overlay
              if(dm.missionList != nil && dm.missionList.count > 0)
              {
-                 for(SSMissionView* m in dm.missionList)
+                 for(NSNumber* mvKey in dm.missionList)
                  {
-                     if(m.route.MissionPoints != nil && m.route.MissionPoints.count > 0)
+                     NSLog(mvKey.stringValue);
+                     
+                     SSMissionView* missionView = [dm.missionList objectForKey:mvKey];
+                    
+                     if([[missionView route]MissionPoints] != nil)
                      {
-                         for(SSMissionRoutePointView* rv in m.route.MissionPoints)
+                         if([[[missionView route]MissionPoints]count] > 0)
                          {
-                             [mapView addAnnotation:rv];
+                             for(SSMissionRoutePointView* rv in missionView.route.MissionPoints)
+                             {
+                                 [mapView addAnnotation:rv];
+                                 
+                                 if(!relocated)
+                                 {
+                                    loc= rv.getMapCoordinate;
+                                 
+                                     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(loc, 250, 250);
+                                     [mapView setRegion:region animated:NO];
+                                     relocated = YES;
+                                 }
+                             }
+                             
+                            
+
                          }
                      }
                      
-                     [mapView addOverlay:[m polyLine]];
+                     [mapView addOverlay:[missionView polyLine]];
                  }
                  
              }
@@ -68,8 +91,7 @@
         
    
         mapView.delegate = self;
-        trackShowing = YES;
-       
+        
     }
     
     return self;
@@ -153,33 +175,12 @@
     UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:dateChooser];
     
     [dateChooser setDismissBlock:^{
-        int locID = [SSSettings selectedLocationID];
-              
-        if(locID > 0)
-        {
-            SSLocation* currentLocation = nil;
-            
-            if([[SSDataManager getInstance]locations] != nil)
-            {
-                currentLocation = [[[SSDataManager getInstance]locations] objectForKey:[NSNumber numberWithInt:locID]];
-            }
-            
-            if(currentLocation != nil)
-            {
-                [locationTitle setTitle:currentLocation.location];
-            }
-        }
-
+        self.updateTitles;
     }];
     
     [self presentViewController:navController animated:YES completion:nil];
 }
 
--(IBAction) showTracklines:(id)sender
-{
-    trackShowing = !trackShowing;
-    showTrackButton.selected = trackShowing;
-}
 
 //- (IBAction)filterByLocation:(id)sender
 //{
@@ -277,4 +278,29 @@
     [mapView setRegion:region animated:NO];
 
 }
+
+- (void) updateTitles
+{
+    int locID = [SSSettings selectedLocationID];
+    
+    if(locID > 0)
+    {
+        SSLocation* currentLocation = nil;
+        
+        if([[SSDataManager getInstance]locations] != nil)
+        {
+            currentLocation = [[[SSDataManager getInstance]locations] objectForKey:[NSNumber numberWithInt:locID]];
+        }
+        
+        if(currentLocation != nil)
+        {
+            [headerTopLine setText:currentLocation.location];
+        }
+    }
+
+    
+    [headerLowerLine setText:[NSString stringWithFormat:@"%@ %@", @"since",[SSSettings convertDateToString:[SSSettings earliestDate] formatString:@"E d-MMM"]]];
+    
+}
+
 @end

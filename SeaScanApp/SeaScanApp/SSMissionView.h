@@ -20,7 +20,7 @@
 
 }
 
-@property (nonatomic, copy) SSMission* route;
+@property (readwrite, retain) SSMission* route;
 
 
  
@@ -30,7 +30,10 @@
 
 -(id) initWithRouteAndPattern:(SSMission*)r colour:(UIColor*)c lineWidth:(Float32)lw lineDashPhase:(UInt32)ldp dashPatternWidth:(NSInteger)dpw;
 -(id) initWithRoute:(SSMission*) r;
+
 -(CLLocationCoordinate2D*) coords;
+
+
 
 
 

@@ -17,18 +17,20 @@
     
     __weak IBOutlet MKMapView* mapView;
     __weak IBOutlet UIBarButtonItem* locationTitle;
-    __weak IBOutlet UIButton* showTrackButton;
     __weak IBOutlet UIButton* showCloseOnlyButton;
+    __weak IBOutlet UILabel* headerTopLine;
+    __weak IBOutlet UILabel* headerLowerLine;
+    __weak IBOutlet UISlider* timeSlider;
     
     CLLocationCoordinate2D loc;
     
-    BOOL trackShowing;
     
 }
 - (IBAction)filterScans:(id)sender;
-- (IBAction) showTracklines:(id)sender;
 - (IBAction) refreshData:(id)sender;
 - (IBAction) showTargetsInRange:(id)sender;
+
+- (void) updateTitles;
 
 
 

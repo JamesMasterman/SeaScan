@@ -12,7 +12,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/CoreData.h>
 
-#define ALL_LOCATIONS @"All"
+#define ALL_LOCATIONS @"All Beaches"
 
 @interface SSLocation : NSObject
 {
