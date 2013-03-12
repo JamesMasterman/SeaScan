@@ -108,6 +108,13 @@
 -(void) mapView:(MKMapView*)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     loc = userLocation.coordinate;
+    
+    /*MKCoordinateRegion newRegion;
+    newRegion.center.latitude = 37.786996;
+    newRegion.center.longitude = -122.440100;
+    newRegion.span.latitudeDelta = 0.112872;
+    newRegion.span.longitudeDelta = 0.109863;*/
+    
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(loc, 250, 250);
     [mapView setRegion:region animated:NO];
     NSLog(@"Updated user location");
@@ -125,12 +132,6 @@
         
         view = [mrv polyLineView];
     }
-//    MKPolylineView* polylineView = [[MKPolylineView alloc]initWithPolyline:overlay];
-//    polylineView.strokeColor = [UIColor cyanColor];
-//    polylineView.lineWidth = 2.0;
-//    polylineView.lineDashPhase = 5;
-//    NSArray* array = [NSArray arrayWithObjects:[NSNumber numberWithInt:5], [NSNumber numberWithInt:5], nil];
-//    polylineView.lineDashPattern = array;
    
     return view;
 }
@@ -182,57 +183,6 @@
 }
 
 
-//- (IBAction)filterByLocation:(id)sender
-//{
-//    NSLog(@"Location Filter Clicked");
-//    
-//    LocationListViewController* locationChooser = [[LocationListViewController alloc]init];
-//    UINavigationController* navController = [[UINavigationController alloc]initWithRootViewController:locationChooser];
-//    
-//    [locationChooser setDismissBlock:^{
-//        NSString* location = [SSConstants selectedLocation];
-//        NSDate*   date     = [SSConstants earliestDate];
-//        [[SSDataQuery getInstance]getFilteredMissions:location date:date];
-//        [locationTitle setTitle:[SSConstants selectedLocation]];
-//    }];
-//    
-//    [self presentViewController:navController animated:YES completion:nil];
-
-//    
-//    CLLocationCoordinate2D coord[4];
-//  //  for(NSInteger i=0;i<10;i++)
-//    {
-//        coord[0] = CLLocationCoordinate2DMake(-32.139097, 115.759260);
-//        coord[1] = CLLocationCoordinate2DMake(-32.137646, 115.748983);
-//        coord[2] = CLLocationCoordinate2DMake(-32.138930, 115.748527);
-//        coord[3] = CLLocationCoordinate2DMake(-32.139077, 115.756890);
-//    }
-//    
-//    SSMissionRoutePoint* pt = [[SSMissionRoutePoint alloc]initWithCoordinate:coord[0] pointID:1 isATarget:TRUE];
-//    
-//    
-//    SSMissionRoutePointView* pv = [[SSMissionRoutePointView alloc]initWithPoint:pt image:[UIImage imageNamed:@"shark.png"]];
-  
-    
-//
-////
-////    
-////    DroneRoutePoint* pt2 = [[DroneRoutePoint alloc]initWithCoordinate:CLLocationCoordinate2DMake(loc.latitude+0.001, loc.longitude)  mission:@"Mission 256 - Scarborough" pointID:@"2"];
-//    
-//    
-//    [mapView addAnnotation:pv];
-////    [mapView addAnnotation:pt2];
-//    MKPolyline *polyline = [MKPolyline polylineWithCoordinates:coord count:4];
-//    [mapView addOverlay:polyline];
-//    
-//
-//    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord[0], 2000,2000);
-//    [mapView setRegion:region animated:NO];
-//    [locationManager stopUpdatingLocation];
-    
-
-    
-//}
 
 -(MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
@@ -253,10 +203,50 @@
                 [customAnnotationView setImage:vw.icon];
             }
             
+            if(vw.scannedIcon !=nil)
+            {
+                UIImageView *imageView=[[UIImageView alloc] initWithImage:vw.scannedIcon];
+                imageView.frame=CGRectMake(0.0, 0.0, 32.0, 32.0);
+                imageView.contentMode = UIViewContentModeScaleAspectFit;
+                customAnnotationView.leftCalloutAccessoryView=imageView;
+                
+            }
         }
         
         customAnnotationView.annotation = annotation;
+        customAnnotationView.canShowCallout = YES;
         
+        /* code for showing image in callout
+         UIImage *flagImage = [UIImage imageNamed:@"flag.png"];
+         
+         // size the flag down to the appropriate size
+         CGRect resizeRect;
+         resizeRect.size = flagImage.size;
+         CGSize maxSize = CGRectInset(self.view.bounds,
+         [MapViewController annotationPadding],
+         [MapViewController annotationPadding]).size;
+         maxSize.height -= self.navigationController.navigationBar.frame.size.height + [MapViewController calloutHeight];
+         if (resizeRect.size.width > maxSize.width)
+         resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
+         if (resizeRect.size.height > maxSize.height)
+         resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.height * maxSize.height, maxSize.height);
+         
+         resizeRect.origin = CGPointMake(0.0, 0.0);
+         UIGraphicsBeginImageContext(resizeRect.size);
+         [flagImage drawInRect:resizeRect];
+         UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+         UIGraphicsEndImageContext();
+         
+         annotationView.image = resizedImage;
+         annotationView.opaque = NO;
+         
+         UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SFIcon.png"]];*/
+         
+         
+       /*  // offset the flag annotation so that the flag pole rests on the map coordinate
+         annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
+         
+         return annotationView;*/
     }
     
     return customAnnotationView;

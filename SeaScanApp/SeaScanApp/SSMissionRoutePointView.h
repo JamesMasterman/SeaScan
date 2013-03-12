@@ -21,10 +21,11 @@
 -(id) initWithPoint:(SSMissionRoutePoint*)p;
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property  SSMissionRoutePoint* point;
-@property  UIImage* icon;
-@property (nonatomic, readonly, copy) NSString *title;
-@property (nonatomic, readonly, copy) NSString *subTitle;
+@property (nonatomic, retain) SSMissionRoutePoint* point;
+@property (nonatomic, retain) UIImage* icon;
+@property (nonatomic, retain) UIImage* scannedIcon;
+@property (nonatomic, readonly, copy) NSString* _title;
+@property (nonatomic, readonly, copy) NSString* _subtitle;
 
 UIImage* getMissionPointIconFromID(int tgtID);
 -(CLLocationCoordinate2D) getMapCoordinate;

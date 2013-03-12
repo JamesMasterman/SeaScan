@@ -238,7 +238,7 @@
                 SSLatestTargets* tgts = lt[row-1];
                 icon = getIconFromID([tgts targetTypeID]);
                 
-                spottedDate = [SSSettings convertDateToString:[tgts dateRecorded] formatString:@"d-MMM H:mma"];
+                spottedDate = [SSSettings convertDateToString:[tgts dateRecorded] formatString:@"d-MMM h:mma"];
                 if(dm.locations != nil && dm.locations.count > 0)
                 {
                     SSLocation* locn = [[dm locations]objectForKey:[NSNumber numberWithInteger:[tgts locationID]]];

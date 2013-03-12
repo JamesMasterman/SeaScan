@@ -13,7 +13,7 @@
 
 @implementation SSMissionRoutePointView
 
-@synthesize point, icon, coordinate, title, subTitle;
+@synthesize point, icon, scannedIcon, coordinate, _title, _subtitle;
 
 -(id) initWithPoint:(SSMissionRoutePoint *)p
 {
@@ -23,21 +23,53 @@
         point = p;
         icon = getMissionPointIconFromID(p.targetTypeID);
         coordinate = CLLocationCoordinate2DMake(p.YCoord, p.XCoord);
+        scannedIcon = nil;
         
         SSDataManager* dm = [SSDataManager getInstance];
         NSString* animal = @"Unknown";
+        _title = @"";
+        _subtitle = @"";
+        
         if(dm != nil && dm.targetTypes != nil)
         {
-            animal = [[dm targetTypes]objectForKey:[NSNumber numberWithInteger:p.targetTypeID]];
-            if(animal == nil)
+            if(p.targetTypeID != WIND)
             {
-                animal = @"Unknown";
+                SSTargetType* targetType = [[dm targetTypes]objectForKey:[NSNumber numberWithInteger:p.targetTypeID]];
+            
+                if(targetType != nil)
+                {
+                    animal = targetType.targetName;
+                }
+            
+        
+        
+                _title = animal;
+        
+                _subtitle = [NSString stringWithFormat:@"%@. Scanned %@", p.annotation, [SSSettings convertDateToString:[p dateRecorded] formatString:@"E d-MMM-YYYY h:mma"]];
             }
         }
         
-        title = [NSString stringWithFormat:@"%@ at %@", animal, [SSSettings convertDateToString:[p dateRecorded] formatString:@"E d-MMM-YYYY HH:mm"]];
+        if(p.isATarget && p.imageURL != nil && p.imageURL.length > 0)
+        {
+            NSString* imagePath = [NSString stringWithFormat:@"%@/%@", dm.baseURL, p.imageURL];
+          //  NSURL *url = [NSURL URLWithString:imagePath];
+           // NSData *imageData = [NSData dataWithContentsOfURL:url];
+            //scannedImage = [[UIImage alloc]initWithData:imageData];
+            
+           // imagePath = [imagePath stringByAppendingString:[[UIScreen mainScreen] scale] > 1 ? @"@2x.png": @".png"];
+            
+            NSData *imageData = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString:imagePath]];
+            
+            CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((__bridge CFDataRef)imageData);
+            CGImageRef imageRef = CGImageCreateWithPNGDataProvider(dataProvider, NULL, NO, kCGRenderingIntentDefault);
+            scannedIcon = [UIImage imageWithCGImage:imageRef scale:[[UIScreen mainScreen] scale] orientation:UIImageOrientationUp];
+            
+            CGDataProviderRelease(dataProvider);
+            CGImageRelease(imageRef);
+            
+            
+        }
         
-        subTitle = p.annotation;
     
     }
 
@@ -52,8 +84,8 @@
         point = nil;
         icon = nil;
         coordinate = CLLocationCoordinate2DMake(0.0,0.0);
-        title = @"";
-        subTitle = @"";
+        _title = @"";
+        _subtitle = @"";
     }
     
     return self;
@@ -92,6 +124,16 @@ UIImage* getMissionPointIconFromID(int tgtID)
     {
         return CLLocationCoordinate2DMake(0.0, 0.0);
     }
+}
+
+- (NSString *)title
+{
+    return _title;
+}
+
+- (NSString *)subtitle
+{
+    return _subtitle;
 }
 
 

@@ -248,6 +248,11 @@ static SSDataManager* _instance = nil;
     [refreshNotifiers addObject:notifier];
 }
 
+-(NSString*) baseURL
+{
+    return [dataQuery baseURL];
+}
+
 
 
 

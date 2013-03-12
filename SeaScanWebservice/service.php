@@ -198,7 +198,11 @@ $app->get("/missions/flightstats/:user/:password/:earliest", function($user, $pa
 	 if(connect($type))
 	 { 
 	    //get recent sightings first
-	    $sql = "Select mp.TargetTypeID, m.LocationID, mp.MissionID, max(mp.DateRecorded) as date_recorded from mission_points as mp, missions as m where m.ID = mp.MissionID and targettypeid > 1 group by targettypeid order by date_recorded desc";
+	    $sql = "SELECT TargetTypeID, MAX( MissionID ) AS max_mission, MAX( DateRecorded ) AS date_recorded
+				FROM mission_points
+				WHERE targettypeid >1
+				GROUP BY targettypeid
+				ORDER BY date_recorded DESC";
 		$result =  mysql_query($sql);
 		$topTargets = array();
 		
@@ -206,10 +210,18 @@ $app->get("/missions/flightstats/:user/:password/:earliest", function($user, $pa
 		{		
 			while($row = mysql_fetch_array($result))
 			{
-			  $topTargets[] = array("TargetTypeID"=>$row['TargetTypeID'],
-									"MissionID"=>$row['MissionID'],
-									"DateRecorded"=>$row['date_recorded'],
-									"LocationID"=>$row['LocationID']);
+			  
+			  $sql = "SELECT LocationID from missions where ID = ".$row['max_mission'];
+			  $locationResult =  mysql_query($sql);
+			  if($locationResult)
+			  {
+			  		$locationRow = mysql_fetch_array($locationResult);
+			  		
+			        $topTargets[] = array("TargetTypeID"=>$row['TargetTypeID'],
+									      "MissionID"=>$row['max_mission'],
+									      "DateRecorded"=>$row['date_recorded'],
+									      "LocationID"=>$locationRow['LocationID']);
+			  }
 			}		 
 	 
 			//now get flight stats

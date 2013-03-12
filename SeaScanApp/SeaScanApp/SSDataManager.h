@@ -41,6 +41,8 @@ typedef void(^_refreshNotifier)(RefreshTypes objectRefreshed);
 
 +(SSDataManager*) getInstance;
 
+-(NSString*) baseURL;
+
 -(void) addRefreshNotifier:(_refreshNotifier)notifier;
 
 
