@@ -81,8 +81,8 @@
             this.imgCapture = new Emgu.CV.UI.ImageBox();
             this.mpMissionMap = new GMap.NET.WindowsForms.GMapControl();
             this.tbTraining = new System.Windows.Forms.TabPage();
-            this.imgTraining = new SeaScanUAV.ROISelectorImageBox();
-            this.tbMavLink = new MediaSlider.MediaSlider();
+            this.lblMavLinkPosition = new System.Windows.Forms.Label();
+            this.tbMavLink = new System.Windows.Forms.TrackBar();
             this.chkSynchroniseVideo = new System.Windows.Forms.CheckBox();
             this.lblWidth = new System.Windows.Forms.Label();
             this.lblHeight = new System.Windows.Forms.Label();
@@ -97,7 +97,6 @@
             this.txtFrameCount = new System.Windows.Forms.TextBox();
             this.lblSource = new System.Windows.Forms.Label();
             this.cboSource = new System.Windows.Forms.ComboBox();
-            this.tbFramePosition = new MediaSlider.MediaSlider();
             this.dlgFileOpen = new System.Windows.Forms.OpenFileDialog();
             this.dlgFileSave = new System.Windows.Forms.SaveFileDialog();
             this.ssMain = new System.Windows.Forms.StatusStrip();
@@ -106,6 +105,9 @@
             this.tsLblBufferSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
             this.ribbonButton1 = new System.Windows.Forms.RibbonButton();
+            this.tbFramePosition = new System.Windows.Forms.TrackBar();
+            this.lblVideoTime = new System.Windows.Forms.Label();
+            this.imgTraining = new SeaScanUAV.ROISelectorImageBox();
             rtVideo = new System.Windows.Forms.RibbonTab();
             ((System.ComponentModel.ISupportInitialize)(this.spBackground)).BeginInit();
             this.spBackground.Panel1.SuspendLayout();
@@ -119,11 +121,13 @@
             this.tbVideo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).BeginInit();
             this.tbTraining.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMavLink)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictRecording)).BeginInit();
             this.gbTrainingSet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgTrainingFrames)).BeginInit();
             this.ssMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbFramePosition)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).BeginInit();
             this.SuspendLayout();
             // 
             // rtVideo
@@ -769,17 +773,19 @@
             // 
             // spImageCapture.Panel2
             // 
+            this.spImageCapture.Panel2.Controls.Add(this.lblMovieProgress);
+            this.spImageCapture.Panel2.Controls.Add(this.lblVideoTime);
+            this.spImageCapture.Panel2.Controls.Add(this.tbFramePosition);
+            this.spImageCapture.Panel2.Controls.Add(this.lblMavLinkPosition);
             this.spImageCapture.Panel2.Controls.Add(this.tbMavLink);
             this.spImageCapture.Panel2.Controls.Add(this.chkSynchroniseVideo);
             this.spImageCapture.Panel2.Controls.Add(this.lblWidth);
             this.spImageCapture.Panel2.Controls.Add(this.lblHeight);
             this.spImageCapture.Panel2.Controls.Add(this.lblElapsedTime);
             this.spImageCapture.Panel2.Controls.Add(this.pictRecording);
-            this.spImageCapture.Panel2.Controls.Add(this.lblMovieProgress);
             this.spImageCapture.Panel2.Controls.Add(this.gbTrainingSet);
             this.spImageCapture.Panel2.Controls.Add(this.lblSource);
             this.spImageCapture.Panel2.Controls.Add(this.cboSource);
-            this.spImageCapture.Panel2.Controls.Add(this.tbFramePosition);
             this.spImageCapture.Size = new System.Drawing.Size(1179, 554);
             this.spImageCapture.SplitterDistance = 979;
             this.spImageCapture.TabIndex = 0;
@@ -854,64 +860,23 @@
             this.tbTraining.Text = "Image Training";
             this.tbTraining.UseVisualStyleBackColor = true;
             // 
-            // imgTraining
+            // lblMavLinkPosition
             // 
-            this.imgTraining.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imgTraining.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-            this.imgTraining.Location = new System.Drawing.Point(3, 3);
-            this.imgTraining.Name = "imgTraining";
-            this.imgTraining.Size = new System.Drawing.Size(965, 522);
-            this.imgTraining.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.imgTraining.TabIndex = 2;
-            this.imgTraining.TabStop = false;
-            this.imgTraining.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseDown);
-            this.imgTraining.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseMove);
-            this.imgTraining.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseUp);
+            this.lblMavLinkPosition.AutoSize = true;
+            this.lblMavLinkPosition.Location = new System.Drawing.Point(12, 163);
+            this.lblMavLinkPosition.Name = "lblMavLinkPosition";
+            this.lblMavLinkPosition.Size = new System.Drawing.Size(70, 13);
+            this.lblMavLinkPosition.TabIndex = 28;
+            this.lblMavLinkPosition.Text = "Mavlink Time";
             // 
             // tbMavLink
             // 
-            this.tbMavLink.Animated = false;
-            this.tbMavLink.AnimationSize = 0.2F;
-            this.tbMavLink.AnimationSpeed = MediaSlider.MediaSlider.AnimateSpeed.Normal;
-            this.tbMavLink.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.tbMavLink.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.tbMavLink.AutoSize = true;
-            this.tbMavLink.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tbMavLink.BackGroundImage = null;
-            this.tbMavLink.ButtonAccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tbMavLink.ButtonBorderColor = System.Drawing.Color.Transparent;
-            this.tbMavLink.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.tbMavLink.ButtonCornerRadius = ((uint)(4u));
-            this.tbMavLink.ButtonSize = new System.Drawing.Size(14, 14);
-            this.tbMavLink.ButtonStyle = MediaSlider.MediaSlider.ButtonType.Round;
-            this.tbMavLink.ContextMenuStrip = null;
-            this.tbMavLink.LargeChange = 1;
-            this.tbMavLink.Location = new System.Drawing.Point(0, 137);
-            this.tbMavLink.Margin = new System.Windows.Forms.Padding(0);
-            this.tbMavLink.Maximum = 10;
-            this.tbMavLink.Minimum = 0;
+            this.tbMavLink.Location = new System.Drawing.Point(5, 140);
             this.tbMavLink.Name = "tbMavLink";
-            this.tbMavLink.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.tbMavLink.ShowButtonOnHover = false;
-            this.tbMavLink.Size = new System.Drawing.Size(178, 34);
-            this.tbMavLink.SliderFlyOut = MediaSlider.MediaSlider.FlyOutStyle.Persistant;
-            this.tbMavLink.SmallChange = 1;
-            this.tbMavLink.SmoothScrolling = false;
-            this.tbMavLink.TabIndex = 25;
-            this.tbMavLink.TickColor = System.Drawing.Color.DarkGray;
+            this.tbMavLink.Size = new System.Drawing.Size(161, 45);
+            this.tbMavLink.TabIndex = 27;
             this.tbMavLink.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbMavLink.TickType = MediaSlider.MediaSlider.TickMode.Standard;
-            this.tbMavLink.TrackBorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.tbMavLink.TrackDepth = 6;
-            this.tbMavLink.TrackFillColor = System.Drawing.Color.Transparent;
-            this.tbMavLink.TrackProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(101)))), ((int)(((byte)(188)))));
-            this.tbMavLink.TrackShadow = false;
-            this.tbMavLink.TrackShadowColor = System.Drawing.Color.DarkGray;
-            this.tbMavLink.TrackStyle = MediaSlider.MediaSlider.TrackType.Progress;
-            this.tbMavLink.Value = 0;
-            this.tbMavLink.FlyOutInfo += new MediaSlider.MediaSlider.FlyOutInfoDelegate(this.tbMavLink_FlyOutInfo);
-            this.tbMavLink.ValueChanged += new MediaSlider.MediaSlider.ValueChangedDelegate(this.tbMavLink_ValueChanged);
-            
+            this.tbMavLink.ValueChanged += new System.EventHandler(this.tbMavLink_ValueChanged);
             this.tbMavLink.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbMavLink_MouseDown);
             this.tbMavLink.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbMavLink_MouseUp);
             // 
@@ -970,7 +935,7 @@
             // 
             this.lblMovieProgress.AutoSize = true;
             this.lblMovieProgress.Enabled = false;
-            this.lblMovieProgress.Location = new System.Drawing.Point(25, 124);
+            this.lblMovieProgress.Location = new System.Drawing.Point(78, 105);
             this.lblMovieProgress.Name = "lblMovieProgress";
             this.lblMovieProgress.Size = new System.Drawing.Size(0, 13);
             this.lblMovieProgress.TabIndex = 17;
@@ -1055,52 +1020,6 @@
             this.cboSource.TabIndex = 3;
             this.cboSource.SelectedIndexChanged += new System.EventHandler(this.cboSource_SelectedIndexChanged);
             // 
-            // tbFramePosition
-            // 
-            this.tbFramePosition.Animated = false;
-            this.tbFramePosition.AnimationSize = 0.2F;
-            this.tbFramePosition.AnimationSpeed = MediaSlider.MediaSlider.AnimateSpeed.Normal;
-            this.tbFramePosition.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.tbFramePosition.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.tbFramePosition.AutoSize = true;
-            this.tbFramePosition.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tbFramePosition.BackGroundImage = null;
-            this.tbFramePosition.ButtonAccentColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tbFramePosition.ButtonBorderColor = System.Drawing.Color.Transparent;
-            this.tbFramePosition.ButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(160)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.tbFramePosition.ButtonCornerRadius = ((uint)(6u));
-            this.tbFramePosition.ButtonSize = new System.Drawing.Size(14, 14);
-            this.tbFramePosition.ButtonStyle = MediaSlider.MediaSlider.ButtonType.Round;
-            this.tbFramePosition.ContextMenuStrip = null;
-            this.tbFramePosition.LargeChange = 1;
-            this.tbFramePosition.Location = new System.Drawing.Point(0, 77);
-            this.tbFramePosition.Margin = new System.Windows.Forms.Padding(0);
-            this.tbFramePosition.Maximum = 10;
-            this.tbFramePosition.Minimum = 0;
-            this.tbFramePosition.Name = "tbFramePosition";
-            this.tbFramePosition.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            this.tbFramePosition.ShowButtonOnHover = false;
-            this.tbFramePosition.Size = new System.Drawing.Size(178, 34);
-            this.tbFramePosition.SliderFlyOut = MediaSlider.MediaSlider.FlyOutStyle.Persistant;
-            this.tbFramePosition.SmallChange = 1;
-            this.tbFramePosition.SmoothScrolling = false;
-            this.tbFramePosition.TabIndex = 26;
-            this.tbFramePosition.TickColor = System.Drawing.Color.DarkGray;
-            this.tbFramePosition.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbFramePosition.TickType = MediaSlider.MediaSlider.TickMode.Standard;
-            this.tbFramePosition.TrackBorderColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.tbFramePosition.TrackDepth = 6;
-            this.tbFramePosition.TrackFillColor = System.Drawing.Color.Transparent;
-            this.tbFramePosition.TrackProgressColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(101)))), ((int)(((byte)(188)))));
-            this.tbFramePosition.TrackShadow = false;
-            this.tbFramePosition.TrackShadowColor = System.Drawing.Color.DarkGray;
-            this.tbFramePosition.TrackStyle = MediaSlider.MediaSlider.TrackType.Progress;
-            this.tbFramePosition.Value = 0;
-            this.tbFramePosition.FlyOutInfo += new MediaSlider.MediaSlider.FlyOutInfoDelegate(this.tbFramePosition_FlyOutInfo);
-            this.tbFramePosition.Scroll += new System.Windows.Forms.ScrollEventHandler(this.tbFramePosition_Scroll);
-            this.tbFramePosition.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseDown);
-            this.tbFramePosition.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseUp);
-            // 
             // dlgFileOpen
             // 
             this.dlgFileOpen.FileName = "*.mpg";
@@ -1160,7 +1079,41 @@
             this.ribbonButton1.ToolTipTitle = null;
             this.ribbonButton1.Value = null;
             // 
-            // frmUAVVisionMain
+            // tbFramePosition
+            // 
+            this.tbFramePosition.Location = new System.Drawing.Point(5, 82);
+            this.tbFramePosition.Name = "tbFramePosition";
+            this.tbFramePosition.Size = new System.Drawing.Size(161, 45);
+            this.tbFramePosition.TabIndex = 29;
+            this.tbFramePosition.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbFramePosition.Scroll += new System.EventHandler(this.tbFramePosition_Scroll);
+            this.tbFramePosition.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseDown);
+            this.tbFramePosition.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseUp);
+            // 
+            // lblVideoTime
+            // 
+            this.lblVideoTime.AutoSize = true;
+            this.lblVideoTime.Location = new System.Drawing.Point(12, 105);
+            this.lblVideoTime.Name = "lblVideoTime";
+            this.lblVideoTime.Size = new System.Drawing.Size(60, 13);
+            this.lblVideoTime.TabIndex = 30;
+            this.lblVideoTime.Text = "Video Time";
+            // 
+            // imgTraining
+            // 
+            this.imgTraining.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgTraining.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
+            this.imgTraining.Location = new System.Drawing.Point(3, 3);
+            this.imgTraining.Name = "imgTraining";
+            this.imgTraining.Size = new System.Drawing.Size(965, 522);
+            this.imgTraining.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.imgTraining.TabIndex = 2;
+            this.imgTraining.TabStop = false;
+            this.imgTraining.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseDown);
+            this.imgTraining.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseMove);
+            this.imgTraining.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseUp);
+            // 
+            // frmSeaScanUAVMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1172,8 +1125,8 @@
             this.Controls.Add(this.cbLocations);
             this.Controls.Add(this.cbUsers);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmUAVVisionMain";
-            this.Text = "Shark Scan - UAV";
+            this.Name = "frmSeaScanUAVMain";
+            this.Text = "SeaScan - UAV";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmUAVVisionMain_FormClosing);
             this.SizeChanged += new System.EventHandler(this.frmUAVVisionMain_SizeChanged);
@@ -1190,13 +1143,15 @@
             this.tbVideo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).EndInit();
             this.tbTraining.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbMavLink)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictRecording)).EndInit();
             this.gbTrainingSet.ResumeLayout(false);
             this.gbTrainingSet.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgTrainingFrames)).EndInit();
             this.ssMain.ResumeLayout(false);
             this.ssMain.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbFramePosition)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1275,12 +1230,14 @@
         private System.Windows.Forms.RibbonButton cmdSettings;
         private System.Windows.Forms.RibbonButton cmdPauseMission;
         private System.Windows.Forms.RibbonButton cmdSharkDetected;
-        private MediaSlider.MediaSlider tbMavLink;
-        private MediaSlider.MediaSlider tbFramePosition;
         private System.Windows.Forms.RibbonButton cmdWhaleDetected;
         private System.Windows.Forms.RibbonButton cmdDolphinDetected;
         private System.Windows.Forms.RibbonButton cmdSealDetected;
         private System.Windows.Forms.RibbonButton cmdResetStart;
+        private System.Windows.Forms.TrackBar tbMavLink;
+        private System.Windows.Forms.Label lblMavLinkPosition;
+        private System.Windows.Forms.TrackBar tbFramePosition;
+        private System.Windows.Forms.Label lblVideoTime;
 
      
     }

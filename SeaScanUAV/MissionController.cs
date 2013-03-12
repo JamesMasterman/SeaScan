@@ -53,6 +53,105 @@ namespace SeaScanUAV
             return isTime;
         }
 
+        public Location MissionLocation
+        {
+            set
+            {
+                if (mission != null)
+                {
+                    mission.Location = value;
+                }
+            }
+
+            get
+            {
+                Location loc = null;
+                if (mission != null)
+                {
+                    loc = mission.Location;
+                }
+
+                return loc;
+            }
+        }
+        public DateTime CurrentMissionTime
+        {
+            get
+            {
+                DateTime time = DateTime.Now;
+                if (logReader != null && logReader.IsOpen)
+                {
+                    time = logReader.CurrentMissionTime;
+                }
+                return time;
+            }
+        }
+
+        public long MissionReadPosition
+        {
+            set
+            {
+                if (logReader != null && logReader.IsOpen)
+                {
+                    logReader.Position = value;
+                }
+            }
+
+            get
+            {
+                if (logReader != null && logReader.IsOpen)
+                {
+                    return logReader.Position;
+                }
+
+                return 0;
+            }
+
+        }
+
+        public long MissionLength
+        {
+            get
+            {
+                long len = 0;
+                if (logReader != null && logReader.IsOpen)
+                {
+                    len = logReader.MaximumPosition;
+                }
+
+                return len;
+            }
+        }
+
+        public bool Paused
+        {
+            get
+            {
+                if (logReader != null && logReader.IsOpen)
+                {
+                    return logReader.Paused;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            set
+            {
+                if (logReader != null && logReader.IsOpen)
+                {
+                    logReader.Paused = value;
+                }
+
+                if (videoController != null && videoController.ImageStream.IsEnabled)
+                {
+                    videoController.TogglePauseVideo(value);
+                }
+            }
+        }
+
+
         public MissionPoint AddMissionPoint(Coordinate3D coord, TargetType type, string annotation)
         {
             MissionPoint mp = null;
@@ -127,55 +226,7 @@ namespace SeaScanUAV
             mission.ClearMissionPoints();
         }
 
-        public DateTime CurrentMissionTime
-        {
-            get
-            {
-                DateTime time = DateTime.Now;
-                if (logReader != null && logReader.IsOpen)
-                {
-                    time = logReader.CurrentMissionTime;
-                }
-                return time;
-            }
-        }
-        
-        public long MissionReadPosition
-        {
-            set
-            {
-                if (logReader!= null && logReader.IsOpen)
-                {
-                    logReader.Position = value;
-                }
-            }
-
-            get
-            {
-                if (logReader != null && logReader.IsOpen)
-                {
-                    return logReader.Position;
-                }
-
-                return 0;
-            }
-
-        }
-
-        public long MissionLength
-        {
-            get
-            {
-                long len = 0;
-                if (logReader != null && logReader.IsOpen)
-                {
-                    len =  logReader.MaximumPosition;
-                }
-
-                return len;
-            }
-        }
-
+       
         public void StopMission(bool upload)
         {
             if (MissionRunning)
@@ -200,33 +251,7 @@ namespace SeaScanUAV
             }
         }
 
-        public bool Paused
-        {
-            get
-            {
-                if (logReader != null && logReader.IsOpen)
-                {
-                    return logReader.Paused;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            set
-            {
-                if (logReader != null && logReader.IsOpen)
-                {
-                    logReader.Paused = value;
-                }
-
-                if (videoController != null && videoController.ImageStream.IsEnabled)
-                {
-                    videoController.TogglePauseVideo(value);
-                }
-            }
-        }
+      
 
         public void UploadMission()
         {

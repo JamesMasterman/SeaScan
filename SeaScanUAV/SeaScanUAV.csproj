@@ -78,7 +78,7 @@
       <HintPath>GMap.NET.WindowsForms\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="MediaSlider">
-      <HintPath>MediaSlider\bin\Release\MediaSlider.dll</HintPath>
+      <HintPath>MediaSlider\MediaSlider.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -29,6 +29,7 @@ namespace SeaScanUAV
         public const int FRAME_HEIGHT = 480;
         public const int FRAME_WIDTH = 640;
         public const int FPS_COUNTER_FRAME_RESET_LIMIT = 10;
+    
 
         protected ImageStreamController imageStream = null;
       
@@ -63,9 +64,7 @@ namespace SeaScanUAV
 
         protected PrecisionTimer renderTimer = null;
       
-        protected Emgu.CV.UI.ImageBox activeImageBox=null;
-
-        protected volatile string mavLinkText = "";
+        protected Emgu.CV.UI.ImageBox activeImageBox=null;       
         
         protected List<Image<Gray, Byte>> trainingImageList = new List<Image<Gray, Byte>>();
         protected List<Image<Bgr, Byte>> targetImageList = new List<Image<Bgr, Byte>>();
@@ -421,13 +420,12 @@ namespace SeaScanUAV
             
         }
 
-        private void tbFramePosition_Scroll(object sender, ScrollEventArgs e)
+        private void tbFramePosition_Scroll(object sender, EventArgs e)
         {
             lblMovieProgress.Text = @"Frame " + tbFramePosition.Value.ToString() + @"/" + tbFramePosition.Maximum.ToString();
             lblMovieProgress.Invalidate();
         }
-
-
+        
         private void tbFramePosition_MouseUp(object sender, MouseEventArgs e)
         {
             if (imageStream != null)
@@ -440,16 +438,14 @@ namespace SeaScanUAV
 
         private void tbFramePosition_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!renderTimer.Paused && !isStopped)
+            if (renderTimer != null)
             {
-                renderTimer.Paused = true;
-                cmdPause.Checked = true;
-            }            
-        }
-
-        private void tbFramePosition_FlyOutInfo(ref string data)
-        {
-            data = GetTimeFromSeconds(tbFramePosition.Value / targetfps);
+                if (!renderTimer.Paused && !isStopped)
+                {
+                    renderTimer.Paused = true;
+                    cmdPause.Checked = true;
+                }
+            }
         }
 
             
@@ -831,6 +827,7 @@ namespace SeaScanUAV
                     if (tbFramePosition.Enabled && frame <= tbFramePosition.Maximum)
                     {
                         tbFramePosition.Value = frame;
+                        lblVideoTime.Text = GetTimeFromSeconds(frame / targetfps);
                     }
 
                     if (isRecording && (Environment.TickCount - blinkStart > 500))
@@ -911,7 +908,7 @@ namespace SeaScanUAV
                                     }
 
                                     secsPerMavlinkPos = ((float)span.TotalSeconds) / ((float)(currPos-missionControl.MissionStartPosition));
-                                    mavLinkText = GetTimeFromSeconds((int)span.TotalSeconds);
+                                    lblMavLinkPosition.Text = GetTimeFromSeconds((int)span.TotalSeconds);
 
                                     routes.Markers.Clear();
                                     routes.Markers.Add(new GMapMarkerPlane(currentPosition.GMapPoint, mpMissionMap) { ToolTipText = "current location", ToolTipMode = MarkerTooltipMode.OnMouseOver });
@@ -979,7 +976,8 @@ namespace SeaScanUAV
 
             chkSynchroniseVideo.Enabled = true;
             cmdPauseMission.Enabled = true;
-            
+
+            tbMavLink.Value = 1;
             tbMavLink.Maximum = 1;
             missionControl.NewMission(cbLocations.SelectedItem as Location, cbAircraft.SelectedItem as Airframe,
                                       cbUsers.SelectedItem as User, cbCameras.SelectedItem as Camera, this, this);
@@ -1029,31 +1027,39 @@ namespace SeaScanUAV
       
         private void tbMavLink_MouseDown(object sender, MouseEventArgs e)
         {
-            missionControl.Paused = true;
-            mouseDown = true;            
+            if (missionControl != null && !missionControl.Paused)
+            {
+                missionControl.Paused = true;
+                mouseDown = true;
+            }
         }
 
         private void tbMavLink_MouseUp(object sender, MouseEventArgs e)
         {
-            if (tbMavLink.Value >= missionControl.MissionStartPosition)
+            if (mouseDown)
             {
-                missionControl.MissionReadPosition = tbMavLink.Value;
-            }
-            else
-            {
-                missionControl.MissionReadPosition = missionControl.MissionStartPosition;
-            }
+                if (tbMavLink.Value >= missionControl.MissionStartPosition)
+                {
+                    missionControl.MissionReadPosition = tbMavLink.Value;
+                }
+                else
+                {
+                    missionControl.MissionReadPosition = missionControl.MissionStartPosition;
+                }
 
-            mouseDown = false;
-            missionControl.Paused = false;
+                mouseDown = false;
+                missionControl.Paused = false;
+            }
          
         }
 
-        private void tbMavLink_FlyOutInfo(ref string data)
+        private void tbMavLink_ValueChanged(object sender, EventArgs e)
         {
-            data = mavLinkText;           
-        }            
-            
+            if (mouseDown)
+            {
+                lblMavLinkPosition.Text = GetTimeFromSeconds((int)(secsPerMavlinkPos * (tbMavLink.Value - missionControl.MissionStartPosition)));
+            }
+        }
 
         private void cbLocations_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1071,6 +1077,9 @@ namespace SeaScanUAV
                     poly.Fill = new SolidBrush(Color.Transparent);
           
                     locationLimits.Polygons.Add(poly);
+
+                    //change current mission
+                    missionControl.MissionLocation = selLoc;
                 }
 
             }
@@ -1126,14 +1135,7 @@ namespace SeaScanUAV
 
         }
 
-        private void tbMavLink_ValueChanged(object sender, EventArgs e)
-        {          
-            if (mouseDown)
-            {
-                mavLinkText = GetTimeFromSeconds((int)(secsPerMavlinkPos * (tbMavLink.Value-missionControl.MissionStartPosition)));
-                Debug.WriteLine("value = " + tbMavLink.Value.ToString());
-            }
-        }
+       
 
         private void cmdResetStart_Click(object sender, EventArgs e)
         {
@@ -1149,6 +1151,8 @@ namespace SeaScanUAV
 
             missionControl.Paused = false;
         }
+
+        
 
       
       
