@@ -216,37 +216,7 @@
         customAnnotationView.annotation = annotation;
         customAnnotationView.canShowCallout = YES;
         
-        /* code for showing image in callout
-         UIImage *flagImage = [UIImage imageNamed:@"flag.png"];
-         
-         // size the flag down to the appropriate size
-         CGRect resizeRect;
-         resizeRect.size = flagImage.size;
-         CGSize maxSize = CGRectInset(self.view.bounds,
-         [MapViewController annotationPadding],
-         [MapViewController annotationPadding]).size;
-         maxSize.height -= self.navigationController.navigationBar.frame.size.height + [MapViewController calloutHeight];
-         if (resizeRect.size.width > maxSize.width)
-         resizeRect.size = CGSizeMake(maxSize.width, resizeRect.size.height / resizeRect.size.width * maxSize.width);
-         if (resizeRect.size.height > maxSize.height)
-         resizeRect.size = CGSizeMake(resizeRect.size.width / resizeRect.size.height * maxSize.height, maxSize.height);
-         
-         resizeRect.origin = CGPointMake(0.0, 0.0);
-         UIGraphicsBeginImageContext(resizeRect.size);
-         [flagImage drawInRect:resizeRect];
-         UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
-         UIGraphicsEndImageContext();
-         
-         annotationView.image = resizedImage;
-         annotationView.opaque = NO;
-         
-         UIImageView *sfIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SFIcon.png"]];*/
-         
-         
-       /*  // offset the flag annotation so that the flag pole rests on the map coordinate
-         annotationView.centerOffset = CGPointMake( annotationView.centerOffset.x + annotationView.image.size.width/2, annotationView.centerOffset.y - annotationView.image.size.height/2 );
-         
-         return annotationView;*/
+       
     }
     
     return customAnnotationView;
