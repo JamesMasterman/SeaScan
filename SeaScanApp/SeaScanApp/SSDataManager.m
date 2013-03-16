@@ -77,6 +77,7 @@ static SSDataManager* _instance = nil;
                                    
                                    for(SSMissionRoutePoint* pt in [m MissionPoints])
                                    {
+                                       pt.parentMissionID = m.missionID;
                                        SSMissionRoutePointView* pv = [[SSMissionRoutePointView alloc]initWithPoint:pt];
                                        
                                        

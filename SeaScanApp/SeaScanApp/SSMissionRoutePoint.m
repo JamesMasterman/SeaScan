@@ -11,7 +11,7 @@
 @implementation SSMissionRoutePoint
 
 
-@synthesize pointID, pointNum, XCoord, YCoord, ZCoord, isATarget, targetTypeID, annotation, imageURL, windSpeed, windBearing, dateRecorded;
+@synthesize pointID, pointNum, XCoord, YCoord, ZCoord, isATarget, targetTypeID, annotation, imageURL, windSpeed, windBearing, dateRecorded, parentMissionID;
 
 
 -(id)initWithCoordinate:(CLLocationCoordinate2D)c pointID:(UInt32)p isATarget:(BOOL)s
@@ -27,6 +27,7 @@
         XCoord = c.longitude;
         YCoord = c.latitude;
         ZCoord = 0.0;
+        parentMissionID = 0;
     }
     
     annotation = nil;

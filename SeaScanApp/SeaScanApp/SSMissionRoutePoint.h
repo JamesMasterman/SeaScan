@@ -32,6 +32,7 @@
 @property (nonatomic) double windSpeed;
 @property (nonatomic) double windBearing;
 @property (nonatomic) NSDate* dateRecorded;
+@property (nonatomic) int parentMissionID;
 
 +(RKObjectMapping*) getObjectMapping;
 +(RKResponseDescriptor*) getResponseDescriptor:(NSString*)responsePath;

@@ -49,7 +49,7 @@
             }
         }
         
-        if(p.isATarget && p.imageURL != nil && p.imageURL.length > 0)
+        if(p.isATarget && p.imageURL != nil && p.imageURL.length > 0) //get the image
         {
             NSString* imagePath = [NSString stringWithFormat:@"%@/%@", dm.baseURL, p.imageURL];
           //  NSURL *url = [NSURL URLWithString:imagePath];
@@ -67,8 +67,31 @@
             CGDataProviderRelease(dataProvider);
             CGImageRelease(imageRef);
             
+        }
+        
+        //setup the custom annotation view
+        NSString *reuseId = @"customAnn";
+        reuseId = [NSString stringWithFormat:@"%d_%d", point.parentMissionID, (int)point.pointID];
+        
+        customAnnotationView = [[MKAnnotationView alloc] initWithAnnotation:self reuseIdentifier:reuseId];
+            
+        if(icon != nil)
+        {
+            [customAnnotationView setImage:icon];
+        }
+        
+        if(scannedIcon !=nil)
+        {
+            UIImageView *imageView=[[UIImageView alloc] initWithImage:scannedIcon];
+            imageView.frame=CGRectMake(0.0, 0.0, 32.0, 32.0);
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            customAnnotationView.leftCalloutAccessoryView=imageView;
             
         }
+       
+        
+        customAnnotationView.annotation = self;
+        customAnnotationView.canShowCallout = YES;
         
     
     }
@@ -89,6 +112,11 @@
     }
     
     return self;
+}
+
+-(MKAnnotationView*) getAnnotationView
+{
+    return customAnnotationView;
 }
 
 UIImage* getMissionPointIconFromID(int tgtID)

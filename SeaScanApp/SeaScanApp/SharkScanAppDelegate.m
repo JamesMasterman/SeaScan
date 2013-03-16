@@ -27,7 +27,7 @@
     NSDate *today = [NSDate date];
     
     NSDateComponents *lastMonthComponents = [[NSDateComponents alloc] init];
-    [lastMonthComponents setMonth:-1];
+    [lastMonthComponents setMonth:-2];
     NSDate *startDate = [calendar dateByAddingComponents:lastMonthComponents toDate:today options:0];
     
     [SSSettings setEarliestDate:startDate];

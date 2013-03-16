@@ -38,8 +38,9 @@
 	// in interface builder instead).
 	//
 	tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-	tableView.rowHeight = 80;
+	tableView.rowHeight = 60;
 	tableView.backgroundColor = [UIColor clearColor];
+
     
     [[SSDataManager getInstance]addRefreshNotifier:^(RefreshTypes type)
     {
@@ -83,7 +84,7 @@
 //
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 4;
+	return 5;
 }
 
 //
@@ -134,7 +135,7 @@
 		//
 		topLabel.tag = TOP_LABEL_TAG;
 		topLabel.backgroundColor = [UIColor clearColor];
-		topLabel.textColor = [UIColor colorWithRed:0.25 green:0.0 blue:0.0 alpha:1.0];
+		topLabel.textColor = [UIColor colorWithRed:0.25 green:0.25 blue:0.25 alpha:1.0];
 		topLabel.highlightedTextColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.9 alpha:1.0];
 		topLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize]];
         
@@ -222,7 +223,7 @@
 	}
 	else 
 	{
-        NSString* icon = @"TableIconShark.png";
+        NSString* icon = @"";
         NSString* spottedDate = @"";
         NSString* spottedLocation = @"";
         
@@ -263,18 +264,18 @@
 
 NSString* getIconFromID(int tgtID)
 {
-    NSString* icon =  @"shark64.png";
+    NSString* icon =  @"shark30.png";
     if(tgtID == WHALE)
     {
-        icon = @"whale64.png";
+        icon = @"whale30.png";
         
     }else if(tgtID == DOLPHIN)
     {
-        icon = @"dolphin64.png";
+        icon = @"dolphin30.png";
         
     }else if(tgtID == SEAL)
     {
-        icon = @"seal64.png";
+        icon = @"seal30.png";
     }
     
     return icon;

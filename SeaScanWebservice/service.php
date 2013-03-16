@@ -363,7 +363,7 @@ $app->get("/missions/:user/:password/:locationid/:earliest/:detected", function(
 			 }
 			 else
 			 {
-				$sql =  "SELECT * FROM missions where LocationID = $location and DateFlown >= '$earliest'";
+				$sql =  "SELECT * FROM missions where LocationID = $locationID and DateFlown >= '$earliest'";
 			 }		 
 			 $missions = array();
 			 $result =  mysql_query($sql);

@@ -91,7 +91,7 @@
 						<string key="IBUITitle">Stats</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">137-presentation.png</string>
+							<string key="NSResourceName">122-stats.png</string>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -365,13 +365,13 @@
 			<object class="NSArray" key="dict.sortedKeys">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>103-map.png</string>
-				<string>137-presentation.png</string>
+				<string>122-stats.png</string>
 				<string>53-house.png</string>
 			</object>
 			<object class="NSArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<string>{26, 21}</string>
-				<string>{28, 26}</string>
+				<string>{27, 19}</string>
 				<string>{22, 22}</string>
 			</object>
 		</object>

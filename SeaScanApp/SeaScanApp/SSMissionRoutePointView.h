@@ -14,7 +14,7 @@
 
 @interface SSMissionRoutePointView : NSObject <MKAnnotation>
 {
-   
+    MKAnnotationView* customAnnotationView;
 
 }
 
@@ -29,5 +29,7 @@
 
 UIImage* getMissionPointIconFromID(int tgtID);
 -(CLLocationCoordinate2D) getMapCoordinate;
+
+-(MKAnnotationView*) getAnnotationView;
 
 @end

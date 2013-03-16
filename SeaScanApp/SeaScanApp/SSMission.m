@@ -52,9 +52,6 @@
     
     [missionMapping addRelationshipMappingWithSourceKeyPath:@"MissionPoints" mapping:missionPointMapping.mapping];
 
-    
-   // [missionMapping addRelationshipMappingWithSourceKeyPath:@"MissionPoints" mapping:[SSMissionRoutePoint getObjectMapping]];
-    
     return missionMapping;
 }
 

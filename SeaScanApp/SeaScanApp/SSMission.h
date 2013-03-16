@@ -18,7 +18,7 @@
 
 @property (nonatomic) int missionID;
 @property (nonatomic) int locationID;
-@property (nonatomic, retain) NSDate*    dateFlown;
+@property (nonatomic) NSDate*    dateFlown;
 @property (nonatomic) double duration;
 @property (nonatomic) double distanceFlown;
 @property (nonatomic) int numTargetsSpotted;

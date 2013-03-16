@@ -80,8 +80,8 @@
     if(self)
     {
         self.route = r;
-        colour = [UIColor greenColor];
-        lineWidth = 2.0;
+        colour = [UIColor cyanColor];
+        lineWidth = 1.0;
         lineDashPhase = 5;
         dashPattern = [NSArray arrayWithObjects:[NSNumber numberWithInt:5], [NSNumber numberWithInt:5], nil];
     }
