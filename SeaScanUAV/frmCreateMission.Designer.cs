@@ -32,10 +32,10 @@
             this.cmdOK = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.dlgFileOpen = new System.Windows.Forms.OpenFileDialog();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblVideoFile = new System.Windows.Forms.Label();
             this.txtVideo = new System.Windows.Forms.TextBox();
             this.cmdBrowseVideo = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblLogFile = new System.Windows.Forms.Label();
             this.txtLog = new System.Windows.Forms.TextBox();
             this.cmdBrowseLog = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -71,14 +71,14 @@
             this.cmdCancel.Text = "Cancel";
             this.cmdCancel.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // lblVideoFile
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 35);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Video File:";
+            this.lblVideoFile.AutoSize = true;
+            this.lblVideoFile.Location = new System.Drawing.Point(23, 35);
+            this.lblVideoFile.Name = "lblVideoFile";
+            this.lblVideoFile.Size = new System.Drawing.Size(56, 13);
+            this.lblVideoFile.TabIndex = 0;
+            this.lblVideoFile.Text = "Video File:";
             // 
             // txtVideo
             // 
@@ -97,14 +97,14 @@
             this.cmdBrowseVideo.UseVisualStyleBackColor = true;
             this.cmdBrowseVideo.Click += new System.EventHandler(this.cmdBrowseVideo_Click);
             // 
-            // label2
+            // lblLogFile
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(32, 99);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Log File:";
+            this.lblLogFile.AutoSize = true;
+            this.lblLogFile.Location = new System.Drawing.Point(32, 99);
+            this.lblLogFile.Name = "lblLogFile";
+            this.lblLogFile.Size = new System.Drawing.Size(47, 13);
+            this.lblLogFile.TabIndex = 3;
+            this.lblLogFile.Text = "Log File:";
             // 
             // txtLog
             // 
@@ -127,10 +127,10 @@
             // 
             this.groupBox1.Controls.Add(this.cmdBrowseLog);
             this.groupBox1.Controls.Add(this.txtLog);
-            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.lblLogFile);
             this.groupBox1.Controls.Add(this.cmdBrowseVideo);
             this.groupBox1.Controls.Add(this.txtVideo);
-            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.lblVideoFile);
             this.groupBox1.Location = new System.Drawing.Point(12, 126);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(663, 154);
@@ -223,10 +223,10 @@
         private System.Windows.Forms.Button cmdOK;
         private System.Windows.Forms.Button cmdCancel;
         private System.Windows.Forms.OpenFileDialog dlgFileOpen;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblVideoFile;
         private System.Windows.Forms.TextBox txtVideo;
         private System.Windows.Forms.Button cmdBrowseVideo;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblLogFile;
         private System.Windows.Forms.TextBox txtLog;
         private System.Windows.Forms.Button cmdBrowseLog;
         private System.Windows.Forms.GroupBox groupBox1;

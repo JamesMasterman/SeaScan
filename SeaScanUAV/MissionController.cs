@@ -6,6 +6,7 @@ using System.IO;
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace SeaScanUAV
 {
@@ -17,7 +18,7 @@ namespace SeaScanUAV
         protected int index = 0;
         protected long cumulativeTime = 0;
        
-        protected MissionPlannerLogReader logReader = null;
+        protected IMissionPlannerReader missionReader = null;
         protected Coordinate3D lastCoord = null;
 
         public bool MissionRunning { get; set; }
@@ -79,9 +80,9 @@ namespace SeaScanUAV
             get
             {
                 DateTime time = DateTime.Now;
-                if (logReader != null && logReader.IsOpen)
+                if (missionReader != null && missionReader.IsOpen)
                 {
-                    time = logReader.CurrentMissionTime;
+                    time = missionReader.CurrentMissionTime;
                 }
                 return time;
             }
@@ -91,17 +92,17 @@ namespace SeaScanUAV
         {
             set
             {
-                if (logReader != null && logReader.IsOpen)
+                if (missionReader != null && missionReader.IsOpen)
                 {
-                    logReader.Position = value;
+                    missionReader.Position = value;
                 }
             }
 
             get
             {
-                if (logReader != null && logReader.IsOpen)
+                if (missionReader != null && missionReader.IsOpen)
                 {
-                    return logReader.Position;
+                    return missionReader.Position;
                 }
 
                 return 0;
@@ -114,9 +115,9 @@ namespace SeaScanUAV
             get
             {
                 long len = 0;
-                if (logReader != null && logReader.IsOpen)
+                if (missionReader != null && missionReader.IsOpen)
                 {
-                    len = logReader.MaximumPosition;
+                    len = missionReader.MaximumPosition;
                 }
 
                 return len;
@@ -127,9 +128,9 @@ namespace SeaScanUAV
         {
             get
             {
-                if (logReader != null && logReader.IsOpen)
+                if (missionReader != null && missionReader.IsOpen)
                 {
-                    return logReader.Paused;
+                    return missionReader.Paused;
                 }
                 else
                 {
@@ -139,9 +140,9 @@ namespace SeaScanUAV
 
             set
             {
-                if (logReader != null && logReader.IsOpen)
+                if (missionReader != null && missionReader.IsOpen)
                 {
-                    logReader.Paused = value;
+                    missionReader.Paused = value;
                 }
 
                 if (videoController != null && videoController.ImageStream.IsEnabled)
@@ -185,30 +186,50 @@ namespace SeaScanUAV
             frmCreateMission createMission = new frmCreateMission();
             if (createMission.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (File.Exists(createMission.LogFile) && File.Exists(createMission.VideoFile))
+                IsLive = createMission.IsLive;
+                if (createMission.IsLive)
                 {
-                    mission = new Mission(loc, plane, user, camera, createMission.Description, createMission.VideoFile, createMission.LogFile);
-                    logReader = new MissionPlannerLogReader(createMission.LogFile, false, callback);
-                    this.videoController = videoController;
-                    IsLive = createMission.IsLive;
+                    missionReader = new MissionPlannerLiveConnector("127.0.0.1", "56781", callback);
+                    if (missionReader.Open(false, DateTime.Now)) 
+                    {
+                        mission = new Mission(loc, plane, user, camera, createMission.Description, createMission.VideoFile, createMission.LogFile);
+                        this.videoController = videoController;
+                    }
+                }
+                else
+                {
+                    if (File.Exists(createMission.LogFile) && File.Exists(createMission.VideoFile))
+                    {
+                        mission = new Mission(loc, plane, user, camera, createMission.Description, createMission.VideoFile, createMission.LogFile);
+                        missionReader = new MissionPlannerLogReader(createMission.LogFile, false, callback);
+                        this.videoController = videoController;                      
+                    }
                 }
             }
         }
 
         public void StartMission()
         {
-            if (!MissionRunning && logReader != null && videoController != null)
+            if (!MissionRunning && missionReader != null && videoController != null)
             {
-                videoController.OpenImageFile(mission.MissionVideo);                
-                MissionRunning = true;
-
-                if (!logReader.Open(videoController.ImageStream.StartTime))
+                if (IsLive)
                 {
-                    MissionRunning = false;
-                    throw new IOException("Error opening log file " + logReader.FileName);
+                    videoController.OpenImageCapture(1);
+                }
+                else
+                {
+                    videoController.OpenImageFile(mission.MissionVideo);
                 }
 
-                MissionStartPosition = logReader.Position;
+                MissionRunning = true;
+
+                if (!missionReader.Open(true, videoController.ImageStream.StartTime))
+                {
+                    MissionRunning = false;
+                    throw new IOException("Error opening log file " + missionReader.FileName);
+                }
+
+                MissionStartPosition = missionReader.Position;
 
                 if (!videoController.StartImageStream())
                 {
@@ -216,14 +237,17 @@ namespace SeaScanUAV
                     throw new IOException("Error opening video file " + mission.MissionVideo);
                 }
 
-                mission.DateFlown = new DateTime(logReader.CurrentMissionTime.Ticks);
+                mission.DateFlown = new DateTime(missionReader.CurrentMissionTime.Ticks);
                 
             }
         }
 
         public void ResetMissionStartPoint()
-        {           
-            mission.ClearMissionPoints();
+        {
+            if (mission != null)
+            {
+                mission.ClearMissionPoints();
+            }
         }
 
        
@@ -231,11 +255,11 @@ namespace SeaScanUAV
         {
             if (MissionRunning)
             {
-                if (logReader != null && logReader.IsOpen)
+                if (missionReader != null && missionReader.IsOpen)
                 {
                     MissionRunning = false;
-                    logReader.Close();
-                    mission.Duration = logReader.Duration.TotalMinutes;
+                    missionReader.Close();
+                    mission.Duration = missionReader.Duration.TotalMinutes;
                 }
 
                 if (videoController != null && videoController.ImageStream.IsEnabled)

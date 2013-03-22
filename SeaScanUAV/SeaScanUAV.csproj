@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\glossy-3d-blue-plane.ico</ApplicationIcon>
+    <ApplicationIcon>airplane.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BSE.Windows.Forms">
@@ -129,6 +129,7 @@
     <Compile Include="ImageStreamController.cs" />
     <Compile Include="ImageStreamWriter.cs" />
     <Compile Include="IMavLinkListener.cs" />
+    <Compile Include="IMissionPlannerReader.cs" />
     <Compile Include="IPrecisionTimerListener.cs" />
     <Compile Include="IPropertyChangeListener.cs" />
     <Compile Include="IVideoController.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="MAVlink\MAVLinkTypes.cs" />
     <Compile Include="MAVlink\MavlinkUtil.cs" />
     <Compile Include="MissionController.cs" />
+    <Compile Include="MissionPlannerLiveConnector.cs" />
     <Compile Include="MissionPlannerLogReader.cs" />
     <Compile Include="ObjectRecogniser.cs" />
     <Compile Include="PrecisionTimer.cs" />
@@ -205,6 +207,7 @@
   <ItemGroup>
     <None Include="Icons\Glossyblueplane.png" />
     <None Include="Resources\dolphin30.png" />
+    <Content Include="airplane.ico" />
     <Content Include="Resources\glossy-3d-blue-plane.ico" />
     <Content Include="OpenCV\cublas32_42_9.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

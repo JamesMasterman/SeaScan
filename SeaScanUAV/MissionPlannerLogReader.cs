@@ -12,32 +12,25 @@ using System.Diagnostics;
 
 namespace SeaScanUAV
 {
-    public class MissionPlannerLogReader
+    public class MissionPlannerLogReader: IMissionPlannerReader
     {
-        public string FileName{get; set;}
-        public bool logreadmode { get; set; }
-        protected BinaryReader reader = null;
-        volatile object readlock = new object();
-
-        public byte sysid { get; set; }
-        public byte compid { get; set; }   
-
-        public TimeSpan Duration { get; set; }
-
-        public LogInfo LastMessage { get; set; }
-
-     
-        public bool IsOpen{get; set;}
-
         protected bool activeLog = false;
-
-        public DateTime currentLogTime;
-
-        public Thread readerThread = null;
-
+        protected BinaryReader reader = null;
+        volatile protected object readlock = new object();
         protected IMavLinkListener callback = null;
-        
         protected long logElapsedTime = -1;
+        protected bool logreadmode { get; set; }
+
+        public string FileName{get; set;}
+        public TimeSpan Duration { get; set; }
+        public LogInfo LastMessage { get; set; }
+        public bool IsOpen { get; set; }       
+
+        protected byte sysid { get; set; }
+        protected byte compid { get; set; }          
+
+        protected DateTime currentLogTime;
+        public Thread readerThread = null;       
 
 
         public DateTime CurrentMissionTime
@@ -105,7 +98,7 @@ namespace SeaScanUAV
             }
         }        
 
-        public bool Open(DateTime syncTime)
+        public bool Open(bool doSync, DateTime syncTime)
         {
             IsOpen = false;
             try
@@ -113,17 +106,20 @@ namespace SeaScanUAV
                 reader = new BinaryReader(new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read));
                 IsOpen = true;
 
-                if (ReadToTime(syncTime))
+                if (doSync)
                 {
-                    readerThread = new Thread(new ThreadStart(ReadLogFile));
-                    readerThread.Priority = ThreadPriority.Highest;
-                    readerThread.Start();
-                }
-                else
-                {
-                    reader.Close();
-                    reader.Dispose();
-                    IsOpen = false;
+                    if (ReadToTime(syncTime))
+                    {
+                        readerThread = new Thread(new ThreadStart(ReadLogFile));
+                        readerThread.Priority = ThreadPriority.Highest;
+                        readerThread.Start();
+                    }
+                    else
+                    {
+                        reader.Close();
+                        reader.Dispose();
+                        IsOpen = false;
+                    }
                 }
             }
             catch (IOException e)
@@ -149,10 +145,10 @@ namespace SeaScanUAV
             }
         }
 
-        public void ResetStream()
+        private void ResetStream()
         {
             Close();
-            Open(DateTime.Now);
+            Open(true, DateTime.Now);
         }
        
 
@@ -233,7 +229,7 @@ namespace SeaScanUAV
             sw.Stop();
         }
 
-        public bool ReadToTime(DateTime position)
+        private bool ReadToTime(DateTime position)
         {
             bool readOK = true;
             while (currentLogTime < position && readOK)
@@ -244,41 +240,8 @@ namespace SeaScanUAV
             return readOK;
 
         }
-
-        //public bool ReadNextLocation()
-        //{
-        //    bool isNavMsg = false;
-        //    bool isAltMsg = false;
-
-        //    bool gotNavMsg = false;
-        //    bool gotAltMsg = false;
-
-        //    lock (this)
-        //    {
-        //        while (IsOpen && ReadNextMAVPacket(ref isNavMsg, ref isAltMsg))
-        //        {
-        //            if (isNavMsg)
-        //            {
-        //                gotNavMsg = true;
-        //            }
-
-        //            if (isAltMsg)
-        //            {
-        //                gotAltMsg = true;
-        //            }
-
-        //            if (gotNavMsg && gotAltMsg)
-        //            {
-        //                break;
-        //            }
-        //        }
-
-        //        return gotNavMsg && gotAltMsg;
-        //    }
-        //}
-
-
-        public bool ReadNextMAVPacket()
+   
+        private bool ReadNextMAVPacket()
         {
             bool readok = true;
             bool hasLat = false;
@@ -333,7 +296,7 @@ namespace SeaScanUAV
         /// Serial Reader to read mavlink packets. POLL method
         /// </summary>
         /// <returns></returns>
-        public byte[] readPacket()
+        private byte[] readPacket()
         {
             byte[] buffer = new byte[300];
             int count = 0;
@@ -425,7 +388,7 @@ namespace SeaScanUAV
             return buffer;
         }
 
-        byte[] readlogPacketMavlink()
+        private byte[] readlogPacketMavlink()
         {
             byte[] temp = new byte[300];
 

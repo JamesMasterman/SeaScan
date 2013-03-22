@@ -66,9 +66,25 @@ namespace SeaScanUAV
 
         private void chkLiveMission_Click(object sender, EventArgs e)
         {
-            
+            txtLog.Enabled = !chkLiveMission.Checked;
+            lblVideoFile.Enabled = !chkLiveMission.Checked;
+            lblLogFile.Enabled = !chkLiveMission.Checked;
+            cmdBrowseLog.Enabled = !chkLiveMission.Checked;
+            cmdBrowseVideo.Enabled = !chkLiveMission.Checked;
+            txtVideo.Enabled = !chkLiveMission.Checked;
             chkUploadPoints.Enabled = chkLiveMission.Checked;
             IsLive = chkLiveMission.Checked;
+
+            if (IsLive)
+            {
+                txtLog.Text = "";
+                txtVideo.Text = "";
+            }
+            else
+            {
+                txtLog.Text = Properties.Settings.Default.lastMissionLog;
+                txtVideo.Text = Properties.Settings.Default.lastMissionMovie;
+            }
         }
 
 

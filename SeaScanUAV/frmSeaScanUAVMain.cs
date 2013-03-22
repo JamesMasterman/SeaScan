@@ -888,7 +888,7 @@ namespace SeaScanUAV
                                 {
                                     currentPosition = new Coordinate3D(coord.Lat, coord.Lon, coord.Alt);
 
-                                    if (currPos > furthestMavlinkPos)
+                                    if (currPos >= furthestMavlinkPos)
                                     {
                                         furthestMavlinkPos = currPos;
                                         route.Points.Add(currentPosition.GMapPoint);
@@ -915,7 +915,7 @@ namespace SeaScanUAV
 
                                 }
 
-                                if (imageStream != null && chkSynchroniseVideo.Checked)
+                                if (!missionControl.IsLive && (imageStream != null && chkSynchroniseVideo.Checked))
                                 {
                                     imageStream.SyncFrames(loggedAt);
                                 }                                                            
@@ -1132,10 +1132,7 @@ namespace SeaScanUAV
             }
 
             missionControl.Paused = false;
-
-        }
-
-       
+        }       
 
         private void cmdResetStart_Click(object sender, EventArgs e)
         {
@@ -1150,18 +1147,7 @@ namespace SeaScanUAV
             furthestMavlinkPos = missionControl.MissionReadPosition;
 
             missionControl.Paused = false;
-        }
-
-        
-
-      
-      
-
-      
-     
-       
+        }       
 
     }
-
-
 }

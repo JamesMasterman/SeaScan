@@ -264,7 +264,7 @@ namespace SeaScanUAV
             return jsonEncodedObject;
         }
 
-        protected HttpStatusCode PostWebServiceData(string url, byte[] postData, ref string responseInfo)
+        public HttpStatusCode PostWebServiceData(string url, byte[] postData, ref string responseInfo)
         {
             HttpStatusCode result = HttpStatusCode.OK;
             try
@@ -333,63 +333,66 @@ namespace SeaScanUAV
             return result;
         }
 
-        protected string GetWebServiceData(string url)
-        {            
-            request = HttpWebRequest.Create(url) as HttpWebRequest;
-            request.Method = "GET";
-            string responseText = null;           
-            
-            try
+        public string GetWebServiceData(string url)
+        {
+            lock (this)
             {
-                response = request.GetResponse() as HttpWebResponse;
+                request = HttpWebRequest.Create(url) as HttpWebRequest;
+                request.Method = "GET";
+                string responseText = null;
 
-                if (request.HaveResponse == true && response == null)
+                try
                 {
-                    String msg = "response was not returned or is null";
-                    throw new WebException(msg);
+                    response = request.GetResponse() as HttpWebResponse;
+
+                    if (request.HaveResponse == true && response == null)
+                    {
+                        String msg = "response was not returned or is null";
+                        throw new WebException(msg);
+                    }
+
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        String msg = "response with status: " + response.StatusCode + " " + response.StatusDescription;
+                        throw new WebException(msg);
+                    }
+
+                    // check response headers for the content type
+                    string contentType = response.GetResponseHeader("Content-Type");
+
+                    // get the response content
+                    StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                    responseText = reader.ReadToEnd();
+                    reader.Close();
+                    reader.Dispose();
+
+                    // handle failures
+                }
+                catch (WebException e)
+                {
+
+                    System.Console.Write(response.StatusCode + " " + response.StatusDescription);
+                    if (e.Response != null)
+                    {
+                        response = (HttpWebResponse)e.Response;
+                    }
+                    else
+                    {
+
+                        System.Console.Write(e.Message);
+                    }
+
+                }
+                finally
+                {
+                    if (response != null)
+                    {
+                        response.Close();
+                    }
                 }
 
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    String msg = "response with status: " + response.StatusCode + " " + response.StatusDescription;
-                    throw new WebException(msg);
-                }
-
-                // check response headers for the content type
-                string contentType = response.GetResponseHeader("Content-Type");
-
-                // get the response content
-                StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
-                responseText = reader.ReadToEnd();
-                reader.Close();
-                reader.Dispose();
-
-                // handle failures
+                return responseText;
             }
-            catch (WebException e)
-            {
-
-                System.Console.Write(response.StatusCode + " " + response.StatusDescription);
-                if (e.Response != null)
-                {
-                    response = (HttpWebResponse)e.Response;
-                }
-                else
-                {
-
-                    System.Console.Write(e.Message);
-                }
-
-            }
-            finally
-            {
-                if (response != null)
-                {
-                    response.Close();
-                }
-            }
-
-            return responseText;
 
         }
     }
