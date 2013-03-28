@@ -34,6 +34,7 @@
     NSNumber* lastSelectedKey;
     
     BOOL hasSetUserLocation;
+    BOOL showingSingleMission;
     
 }
 - (IBAction)filterScans:(id)sender;

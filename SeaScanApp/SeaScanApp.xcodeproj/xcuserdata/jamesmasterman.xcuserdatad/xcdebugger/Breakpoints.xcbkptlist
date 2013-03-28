@@ -379,55 +379,17 @@
          endingLineNumber = "149"
          landmarkName = "-refreshTargetTypes"
          landmarkType = "5">
-         <Locations>
-            <Location
-               shouldBeEnabled = "Yes"
-               ignoreCount = "0"
-               continueAfterRunningActions = "No"
-               symbolName = "__73-[SSDataManager refreshLocations:onlyFlownLocations:onlyTargetLocations:]_block_invoke"
-               urlString = "file://localhost/Users/jamesmasterman/Documents/Development/SeaScan/SeaScanApp/SeaScanApp/SSDataManager.m"
-               timestampString = "385132110.599359"
-               startingColumnNumber = "9223372036854775807"
-               endingColumnNumber = "9223372036854775807"
-               startingLineNumber = "149"
-               endingLineNumber = "149">
-            </Location>
-            <Location
-               shouldBeEnabled = "Yes"
-               ignoreCount = "0"
-               continueAfterRunningActions = "No"
-               symbolName = "__copy_helper_block_"
-               urlString = "file://localhost/Users/jamesmasterman/Documents/Development/SeaScan/SeaScanApp/SeaScanApp/SSDataManager.m"
-               timestampString = "385132110.600046"
-               startingColumnNumber = "9223372036854775807"
-               endingColumnNumber = "9223372036854775807"
-               startingLineNumber = "149"
-               endingLineNumber = "149">
-            </Location>
-            <Location
-               shouldBeEnabled = "Yes"
-               ignoreCount = "0"
-               continueAfterRunningActions = "No"
-               symbolName = "__destroy_helper_block_"
-               urlString = "file://localhost/Users/jamesmasterman/Documents/Development/SeaScan/SeaScanApp/SeaScanApp/SSDataManager.m"
-               timestampString = "385132110.600564"
-               startingColumnNumber = "9223372036854775807"
-               endingColumnNumber = "9223372036854775807"
-               startingLineNumber = "149"
-               endingLineNumber = "149">
-            </Location>
-         </Locations>
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385123925.274986"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "158"
-         endingLineNumber = "158"
+         startingLineNumber = "167"
+         endingLineNumber = "167"
          landmarkName = "-filterScans:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -436,11 +398,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385123925.274986"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "143"
-         endingLineNumber = "143"
+         startingLineNumber = "152"
+         endingLineNumber = "152"
          landmarkName = "-viewDidUnload"
          landmarkType = "5">
       </FileBreakpoint>
@@ -514,11 +476,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130299.297759"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "190"
-         endingLineNumber = "190"
+         startingLineNumber = "199"
+         endingLineNumber = "199"
          landmarkName = "-refreshData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -527,11 +489,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130299.297759"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "328"
-         endingLineNumber = "328"
+         startingLineNumber = "338"
+         endingLineNumber = "338"
          landmarkName = "-refreshScans"
          landmarkType = "5">
       </FileBreakpoint>
@@ -540,11 +502,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385123925.274986"
+         timestampString = "385167068.820171"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "60"
-         endingLineNumber = "60"
+         startingLineNumber = "62"
+         endingLineNumber = "62"
          landmarkName = "-initWithNibName:bundle:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -566,11 +528,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130299.297759"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "303"
-         endingLineNumber = "303"
+         startingLineNumber = "312"
+         endingLineNumber = "312"
          landmarkName = "-updateTitles"
          landmarkType = "5">
       </FileBreakpoint>
@@ -579,11 +541,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130299.297759"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "200"
-         endingLineNumber = "200"
+         startingLineNumber = "209"
+         endingLineNumber = "209"
          landmarkName = "-showTargetsInRange:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -592,11 +554,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130299.297759"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "331"
-         endingLineNumber = "331"
+         startingLineNumber = "341"
+         endingLineNumber = "341"
          landmarkName = "-refreshScans"
          landmarkType = "5">
       </FileBreakpoint>
@@ -605,11 +567,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130299.297759"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "356"
-         endingLineNumber = "356"
+         startingLineNumber = "366"
+         endingLineNumber = "366"
          landmarkName = "-refreshScans"
          landmarkType = "5">
       </FileBreakpoint>
@@ -618,11 +580,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130299.297759"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "395"
-         endingLineNumber = "395"
+         startingLineNumber = "405"
+         endingLineNumber = "405"
          landmarkName = "-refreshScans"
          landmarkType = "5">
       </FileBreakpoint>
@@ -631,11 +593,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130619.12037"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "368"
-         endingLineNumber = "368"
+         startingLineNumber = "378"
+         endingLineNumber = "378"
          landmarkName = "-refreshScans"
          landmarkType = "5">
       </FileBreakpoint>
@@ -644,11 +606,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SeaScanApp/MapViewController.m"
-         timestampString = "385130629.505014"
+         timestampString = "385168183.844547"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "365"
-         endingLineNumber = "365"
+         startingLineNumber = "375"
+         endingLineNumber = "375"
          landmarkName = "-refreshScans"
          landmarkType = "5">
       </FileBreakpoint>

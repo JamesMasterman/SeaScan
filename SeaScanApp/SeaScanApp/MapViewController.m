@@ -47,7 +47,9 @@
              timeSlider.maximumValue = 1.0f;
              selectedKey = [NSNumber numberWithInt:-1];
              lastSelectedKey = [NSNumber numberWithInt:-2];
-             minKey = [NSNumber numberWithInt:0];;
+             minKey = [NSNumber numberWithInt:0];
+             showingSingleMission = false;
+             
              [self refreshScans];
          }
      }];
@@ -69,6 +71,8 @@
         selectedKey = [NSNumber numberWithInt:-1];
         lastSelectedKey = [NSNumber numberWithInt:-2];
         minKey      = [NSNumber numberWithInt:0];
+        showingSingleMission = false;
+        
         hasSetUserLocation = NO;
         
     }
@@ -128,7 +132,12 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    if((interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight) || (interfaceOrientation == UIInterfaceOrientationPortrait))
+    {
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -319,6 +328,7 @@
     
     //add each mission as overlay
     SSDataManager* dm = [SSDataManager getInstance];
+    showingSingleMission = selectedKey.intValue > minKey.intValue;
     
     if(dm.missionList != nil && dm.missionList.count > 0)
     {
@@ -370,7 +380,7 @@
                             }
                         }
                         
-                        if(!relocated && [selectedKey isEqualToNumber:mvKey])
+                        if(!relocated && (!showingSingleMission || (showingSingleMission && [selectedKey isEqualToNumber:mvKey])))
                         {
                             loc= rv.getMapCoordinate;
                             
@@ -381,7 +391,7 @@
                     }
                 }
             
-                if(selectedKey.intValue > minKey.intValue)
+                if(showingSingleMission)
                 {
                     if([selectedKey isEqualToNumber:mvKey])
                     {
