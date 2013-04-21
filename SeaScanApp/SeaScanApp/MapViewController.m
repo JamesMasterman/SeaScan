@@ -29,12 +29,10 @@
     [sliderPopUp setTextColor:[UIColor whiteColor]];
     [sliderPopUp setBackgroundColor:[UIColor grayColor]];
     [sliderPopUp setFont:[UIFont systemFontOfSize:[UIFont labelFontSize]-3]];
-    
     [sliderPopUp setAlpha:0.f];
     
     [self.view addSubview:sliderPopUp];
    
-    
     [self updateTitles];
     
     SSDataManager* dm = [SSDataManager getInstance];
@@ -193,7 +191,6 @@
 
 - (IBAction) refreshData:(id)sender
 {
-        
     activityIndicator.startAnimating;
     
     [self performSelector: @selector(reloadMissions)
@@ -248,12 +245,12 @@
     }
     
     [UIView animateWithDuration:0.5
-                 animations:^{
-                     [sliderPopUp setAlpha:0.7f];
-                 }
-                 completion:^(BOOL finished){
+            animations:^{
+                [sliderPopUp setAlpha:0.7f];
+            }
+            completion:^(BOOL finished){
                      
-                 }];
+            }];
 
     [timer invalidate];
     timer = nil;
@@ -325,6 +322,7 @@
 {
     BOOL relocated = NO;
     [mapView removeOverlays:[mapView overlays]];
+    [mapView removeAnnotations:[mapView annotations]];
     
     //add each mission as overlay
     SSDataManager* dm = [SSDataManager getInstance];
