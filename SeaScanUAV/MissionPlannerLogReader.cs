@@ -244,8 +244,7 @@ namespace SeaScanUAV
         private bool ReadNextMAVPacket()
         {
             bool readok = true;
-            bool hasLat = false;
-            bool hasAlt = false;
+            bool hasLat = false;         
             bool hasWind = false;
 
             LastMessage = new Coordinate3D();
@@ -253,27 +252,21 @@ namespace SeaScanUAV
             lock (this)
             {
 
-                while (IsOpen && readok && !(hasLat && hasAlt && hasWind))
+                while (IsOpen && readok && !(hasLat && hasWind))
                 {
                     readok = false;
                     if (reader.BaseStream.Position < reader.BaseStream.Length)
                     {
                         byte[] packet = readPacket();
-                        if (packet[5] == MAVLinkTypes.MAVLINK_MSG_ID_GPS_RAW_INT)
+                        if (packet[5] == MAVLinkTypes.MAVLINK_MSG_ID_GLOBAL_POSITION_INT)
                         {
-                            var gps = packet.ByteArrayToStructure<MAVLinkTypes.mavlink_gps_raw_int_t>(6);
+                            var gps = packet.ByteArrayToStructure<MAVLinkTypes.mavlink_global_position_int_t>(6);
                            
                             ((Coordinate3D)LastMessage).Lat = gps.lat * 1.0e-7f;
                             ((Coordinate3D)LastMessage).Lon = gps.lon * 1.0e-7f;
+                            ((Coordinate3D)LastMessage).Alt = gps.alt * 1.0e-3f;
                             hasLat = true;
-                        }
-
-                        if (packet[5] == MAVLinkTypes.MAVLINK_MSG_ID_VFR_HUD)
-                        {
-                            var vfr = packet.ByteArrayToStructure<MAVLinkTypes.mavlink_vfr_hud_t>(6);
-                            hasAlt = true;
-                            ((Coordinate3D)LastMessage).Alt = vfr.alt;
-                        }
+                        }                        
 
                         if (packet[5] == MAVLinkTypes.MAVLINK_MSG_ID_WIND)
                         {

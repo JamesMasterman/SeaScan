@@ -33,7 +33,9 @@ namespace SeaScanUAV
 
         protected ImageStreamController imageStream = null;
       
-        protected MissionController missionControl = new MissionController();     
+        protected MissionController missionControl = new MissionController();
+
+        protected HistogramView histogramView = null;
 
         protected ApplicationPropertyManager properties = new ApplicationPropertyManager();
    
@@ -180,6 +182,8 @@ namespace SeaScanUAV
                     break;
                 }
             }
+
+            histogramView = new HistogramView(redChannel, blueChannel, greenChannel);
                      
            
         }
@@ -240,9 +244,7 @@ namespace SeaScanUAV
                 cmdPlay.Enabled = true;
                 cmdPause.Enabled = true;
                 cmdStop.Enabled = true;
-                cmdRecord.Enabled = true;
-                cmdFwd.Enabled = true;
-                cmdRewind.Enabled = true;
+                cmdRecord.Enabled = true;            
 
                 if (imageStream.FrameRate > 0)
                 {
@@ -307,8 +309,7 @@ namespace SeaScanUAV
                 cmdPause.Enabled = false;
                 cmdStop.Enabled = false;
                 cmdRecord.Enabled = false;
-                cmdFwd.Enabled = false;
-                cmdRewind.Enabled = false;
+              
             }
 
             return retVal;
@@ -456,9 +457,13 @@ namespace SeaScanUAV
             {
                 activeImageBox = imgCapture;
             }
-            else
+            else if (tbMain.SelectedIndex == 1)
             {
                 activeImageBox = imgTraining;
+            }
+            else
+            {
+                activeImageBox = imgHistogramImage;
             }
         
         }
@@ -847,6 +852,8 @@ namespace SeaScanUAV
 
                     lblMovieStatus.Text = "FPS: " + fps.ToString("0.0");
                     tsLblBufferSize.Text = "Buffer Fullness: " + imageStream.ReadBufferFullness + "%";
+
+                    histogramView.CreateHistogram(img);
                 }
             }
 

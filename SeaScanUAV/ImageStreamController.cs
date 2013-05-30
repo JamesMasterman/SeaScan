@@ -6,7 +6,6 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
 using System.Drawing;
-using System.Threading;
 using System.Diagnostics;
 
 namespace SeaScanUAV
@@ -22,8 +21,7 @@ namespace SeaScanUAV
         protected Capture capture = null;
         protected bool isEnabled = false;
 
-        protected Queue<Image<Bgr, Byte>> frameBuffer=null;
-        protected Thread captureThread = null;
+        protected Queue<Image<Bgr, Byte>> frameBuffer=null;     
 
         protected volatile bool isReading = false;
 
@@ -58,6 +56,7 @@ namespace SeaScanUAV
             {
                 frameBuffer = new Queue<Image<Bgr, Byte>>((int)FramesToBuffer);
                 capture = new Capture(streamId);
+                capture.ImageGrabbed += BufferFrames;                
                 isEnabled = true;
             }
             catch (Exception e)
@@ -76,7 +75,8 @@ namespace SeaScanUAV
             {
                 frameBuffer = new Queue<Image<Bgr, Byte>>((int)FramesToBuffer);
                 ReadSychronisationData(streamFile);
-                capture = new Capture(streamFile);              
+                capture = new Capture(streamFile);
+                capture.ImageGrabbed += BufferFrames; 
                 isEnabled = true;
             }
             catch(Exception e)
@@ -178,30 +178,20 @@ namespace SeaScanUAV
             {
                 isReading = true;
                 isLastFrame = false;
+                capture.Start();
                 
                 CurrentFrame = 0;
                 cachedFrameCount = -1;
-               
-                captureThread = new Thread(new ThreadStart(BufferFrames));
-                captureThread.Start();                
+                     
             }
         }
 
         public void StopReading()
         {
-            if (isReading && captureThread != null)
+            if (isReading)
             {
-                isReading = false;
-
-                if (captureThread != null)
-                {
-                    captureThread.Interrupt();
-                    if (!captureThread.Join(2000))
-                    {
-                        captureThread.Abort();
-                    }
-                }
-                
+                capture.Stop();
+                isReading = false;              
                 StopWriting();
             }
         }
@@ -395,47 +385,35 @@ namespace SeaScanUAV
             return grayFrame;
         }
 
-        protected void BufferFrames()
+        protected void BufferFrames(object sender, EventArgs arg)
         {
             try
-            {
-                while (isReading)
+            {           
+                Image<Bgr, Byte> frame = CaptureFrame();
+                if (!isLastFrame)
                 {
-                    if (frameBuffer.Count < FramesToBuffer) //maintain a minimum buffer size
+                    lock (lockObject)
                     {
-                        Image<Bgr, Byte> frame = CaptureFrame();
-                        if (!isLastFrame)
-                        {
-                            lock (lockObject)
-                            {
-                                frameBuffer.Enqueue(frame);
-                                currentFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES) - 1;
-                                currentFrame -= (frameBuffer.Count - 1); //current frame is the frame on the front of the queue.
+                        frameBuffer.Enqueue(frame);
+                        currentFrame = (int)capture.GetCaptureProperty(Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES) - 1;
+                        currentFrame -= (frameBuffer.Count - 1); //current frame is the frame on the front of the queue.
 
 #if DEBUG
-                                // Debug.WriteLine("curr frame = " + currentFrame);
+                         Debug.WriteLine("curr frame = " + currentFrame);
 #endif
-                            }
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        Thread.Sleep(50);
                     }
                 }
+                else
+                {
+                    //break;
+                }        
+                
             }
-            catch (ThreadInterruptedException tie)
+            catch (Exception e)
             {
-            }
-            catch (ThreadAbortException tae)
-            {
-            }
+            }           
            
-            Debug.WriteLine("exited buffer");
+           // Debug.WriteLine("exited buffer");
 
         }
 
@@ -449,12 +427,11 @@ namespace SeaScanUAV
                 {
                     lock (lockObject)
                     {
-                        frame = capture.QueryFrame();
+                        frame = capture.RetrieveBgrFrame();
                     }
 
                     if(frame != null)
-                    {
-                     
+                    {                     
                         //  frame._EqualizeHist();
                         if (IsInterlaced)
                         {

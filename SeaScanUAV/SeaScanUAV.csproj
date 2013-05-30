@@ -84,6 +84,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Windows.Forms.Ribbon35, Version=3.5.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\System.Windows.Forms.Ribbon35.dll</HintPath>
@@ -126,6 +127,8 @@
     <Compile Include="GMapMarkerPlane.cs" />
     <Compile Include="GMapMarkerTarget.cs" />
     <Compile Include="GMapMarkerWind.cs" />
+    <Compile Include="HistogramView.cs" />
+    <Compile Include="ImageAnalyser.cs" />
     <Compile Include="ImageStreamController.cs" />
     <Compile Include="ImageStreamWriter.cs" />
     <Compile Include="IMavLinkListener.cs" />

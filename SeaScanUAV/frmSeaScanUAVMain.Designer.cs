@@ -31,11 +31,9 @@
             System.Windows.Forms.RibbonTab rtVideo;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSeaScanUAVMain));
             this.ribbonPanel1 = new System.Windows.Forms.RibbonPanel();
-            this.cmdRewind = new System.Windows.Forms.RibbonButton();
             this.cmdPause = new System.Windows.Forms.RibbonButton();
             this.cmdStop = new System.Windows.Forms.RibbonButton();
             this.cmdPlay = new System.Windows.Forms.RibbonButton();
-            this.cmdFwd = new System.Windows.Forms.RibbonButton();
             this.cmdRecord = new System.Windows.Forms.RibbonButton();
             this.udFrameRate = new System.Windows.Forms.RibbonUpDown();
             this.cmdDeinterlace = new System.Windows.Forms.RibbonButton();
@@ -81,6 +79,16 @@
             this.imgCapture = new Emgu.CV.UI.ImageBox();
             this.mpMissionMap = new GMap.NET.WindowsForms.GMapControl();
             this.tbTraining = new System.Windows.Forms.TabPage();
+            this.imgTraining = new SeaScanUAV.ROISelectorImageBox();
+            this.tbHistograms = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.imgHistogramImage = new Emgu.CV.UI.ImageBox();
+            this.redChannel = new Emgu.CV.UI.HistogramBox();
+            this.greenChannel = new Emgu.CV.UI.HistogramBox();
+            this.blueChannel = new Emgu.CV.UI.HistogramBox();
+            this.lblMovieProgress = new System.Windows.Forms.Label();
+            this.lblVideoTime = new System.Windows.Forms.Label();
+            this.tbFramePosition = new System.Windows.Forms.TrackBar();
             this.lblMavLinkPosition = new System.Windows.Forms.Label();
             this.tbMavLink = new System.Windows.Forms.TrackBar();
             this.chkSynchroniseVideo = new System.Windows.Forms.CheckBox();
@@ -88,7 +96,6 @@
             this.lblHeight = new System.Windows.Forms.Label();
             this.lblElapsedTime = new System.Windows.Forms.Label();
             this.pictRecording = new System.Windows.Forms.PictureBox();
-            this.lblMovieProgress = new System.Windows.Forms.Label();
             this.gbTrainingSet = new System.Windows.Forms.GroupBox();
             this.cmdPreviousFrame = new System.Windows.Forms.Button();
             this.cmdNextFrame = new System.Windows.Forms.Button();
@@ -105,9 +112,6 @@
             this.tsLblBufferSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
             this.ribbonButton1 = new System.Windows.Forms.RibbonButton();
-            this.tbFramePosition = new System.Windows.Forms.TrackBar();
-            this.lblVideoTime = new System.Windows.Forms.Label();
-            this.imgTraining = new SeaScanUAV.ROISelectorImageBox();
             rtVideo = new System.Windows.Forms.RibbonTab();
             ((System.ComponentModel.ISupportInitialize)(this.spBackground)).BeginInit();
             this.spBackground.Panel1.SuspendLayout();
@@ -121,13 +125,16 @@
             this.tbVideo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).BeginInit();
             this.tbTraining.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).BeginInit();
+            this.tbHistograms.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.imgHistogramImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbFramePosition)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMavLink)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictRecording)).BeginInit();
             this.gbTrainingSet.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgTrainingFrames)).BeginInit();
             this.ssMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbFramePosition)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).BeginInit();
             this.SuspendLayout();
             // 
             // rtVideo
@@ -138,33 +145,14 @@
             // 
             // ribbonPanel1
             // 
-            this.ribbonPanel1.Items.Add(this.cmdRewind);
             this.ribbonPanel1.Items.Add(this.cmdPause);
             this.ribbonPanel1.Items.Add(this.cmdStop);
             this.ribbonPanel1.Items.Add(this.cmdPlay);
-            this.ribbonPanel1.Items.Add(this.cmdFwd);
             this.ribbonPanel1.Items.Add(this.cmdRecord);
             this.ribbonPanel1.Items.Add(this.udFrameRate);
             this.ribbonPanel1.Items.Add(this.cmdDeinterlace);
             this.ribbonPanel1.Tag = null;
             this.ribbonPanel1.Text = "Video Control";
-            // 
-            // cmdRewind
-            // 
-            this.cmdRewind.AltKey = null;
-            this.cmdRewind.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
-            this.cmdRewind.DropDownArrowSize = new System.Drawing.Size(5, 3);
-            this.cmdRewind.Enabled = false;
-            this.cmdRewind.Image = ((System.Drawing.Image)(resources.GetObject("cmdRewind.Image")));
-            this.cmdRewind.SmallImage = ((System.Drawing.Image)(resources.GetObject("cmdRewind.SmallImage")));
-            this.cmdRewind.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
-            this.cmdRewind.Tag = null;
-            this.cmdRewind.Text = null;
-            this.cmdRewind.ToolTip = null;
-            this.cmdRewind.ToolTipImage = null;
-            this.cmdRewind.ToolTipTitle = null;
-            this.cmdRewind.Value = null;
-            this.cmdRewind.Click += new System.EventHandler(this.cmdRewind_Click);
             // 
             // cmdPause
             // 
@@ -178,7 +166,7 @@
             this.cmdPause.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
             this.cmdPause.Tag = null;
             this.cmdPause.Text = null;
-            this.cmdPause.ToolTip = null;
+            this.cmdPause.ToolTip = "Pause";
             this.cmdPause.ToolTipImage = null;
             this.cmdPause.ToolTipTitle = null;
             this.cmdPause.Value = null;
@@ -195,7 +183,7 @@
             this.cmdStop.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
             this.cmdStop.Tag = null;
             this.cmdStop.Text = null;
-            this.cmdStop.ToolTip = null;
+            this.cmdStop.ToolTip = "Stop";
             this.cmdStop.ToolTipImage = null;
             this.cmdStop.ToolTipTitle = null;
             this.cmdStop.Value = null;
@@ -212,28 +200,11 @@
             this.cmdPlay.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
             this.cmdPlay.Tag = null;
             this.cmdPlay.Text = null;
-            this.cmdPlay.ToolTip = null;
+            this.cmdPlay.ToolTip = "Play";
             this.cmdPlay.ToolTipImage = null;
             this.cmdPlay.ToolTipTitle = null;
             this.cmdPlay.Value = null;
             this.cmdPlay.Click += new System.EventHandler(this.cmdPlay_Click);
-            // 
-            // cmdFwd
-            // 
-            this.cmdFwd.AltKey = null;
-            this.cmdFwd.DropDownArrowDirection = System.Windows.Forms.RibbonArrowDirection.Down;
-            this.cmdFwd.DropDownArrowSize = new System.Drawing.Size(5, 3);
-            this.cmdFwd.Enabled = false;
-            this.cmdFwd.Image = ((System.Drawing.Image)(resources.GetObject("cmdFwd.Image")));
-            this.cmdFwd.SmallImage = ((System.Drawing.Image)(resources.GetObject("cmdFwd.SmallImage")));
-            this.cmdFwd.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
-            this.cmdFwd.Tag = null;
-            this.cmdFwd.Text = null;
-            this.cmdFwd.ToolTip = null;
-            this.cmdFwd.ToolTipImage = null;
-            this.cmdFwd.ToolTipTitle = null;
-            this.cmdFwd.Value = null;
-            this.cmdFwd.Click += new System.EventHandler(this.cmdFwd_Click);
             // 
             // cmdRecord
             // 
@@ -247,7 +218,7 @@
             this.cmdRecord.Style = System.Windows.Forms.RibbonButtonStyle.Normal;
             this.cmdRecord.Tag = null;
             this.cmdRecord.Text = null;
-            this.cmdRecord.ToolTip = null;
+            this.cmdRecord.ToolTip = "Record";
             this.cmdRecord.ToolTipImage = null;
             this.cmdRecord.ToolTipTitle = null;
             this.cmdRecord.Value = null;
@@ -794,6 +765,7 @@
             // 
             this.tbMain.Controls.Add(this.tbVideo);
             this.tbMain.Controls.Add(this.tbTraining);
+            this.tbMain.Controls.Add(this.tbHistograms);
             this.tbMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbMain.Location = new System.Drawing.Point(0, 0);
             this.tbMain.Name = "tbMain";
@@ -857,8 +829,117 @@
             this.tbTraining.Padding = new System.Windows.Forms.Padding(3);
             this.tbTraining.Size = new System.Drawing.Size(971, 528);
             this.tbTraining.TabIndex = 1;
-            this.tbTraining.Text = "Image Training";
+            this.tbTraining.Text = "Full Size";
             this.tbTraining.UseVisualStyleBackColor = true;
+            // 
+            // imgTraining
+            // 
+            this.imgTraining.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgTraining.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
+            this.imgTraining.Location = new System.Drawing.Point(3, 3);
+            this.imgTraining.Name = "imgTraining";
+            this.imgTraining.Size = new System.Drawing.Size(965, 522);
+            this.imgTraining.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.imgTraining.TabIndex = 2;
+            this.imgTraining.TabStop = false;
+            this.imgTraining.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseDown);
+            this.imgTraining.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseMove);
+            this.imgTraining.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseUp);
+            // 
+            // tbHistograms
+            // 
+            this.tbHistograms.Controls.Add(this.tableLayoutPanel1);
+            this.tbHistograms.Location = new System.Drawing.Point(4, 22);
+            this.tbHistograms.Name = "tbHistograms";
+            this.tbHistograms.Padding = new System.Windows.Forms.Padding(3);
+            this.tbHistograms.Size = new System.Drawing.Size(971, 528);
+            this.tbHistograms.TabIndex = 2;
+            this.tbHistograms.Text = "Histograms";
+            this.tbHistograms.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.imgHistogramImage, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.redChannel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.greenChannel, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.blueChannel, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(965, 522);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // imgHistogramImage
+            // 
+            this.imgHistogramImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgHistogramImage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imgHistogramImage.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
+            this.imgHistogramImage.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            this.imgHistogramImage.Location = new System.Drawing.Point(485, 264);
+            this.imgHistogramImage.Name = "imgHistogramImage";
+            this.imgHistogramImage.Size = new System.Drawing.Size(477, 255);
+            this.imgHistogramImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgHistogramImage.TabIndex = 3;
+            this.imgHistogramImage.TabStop = false;
+            // 
+            // redChannel
+            // 
+            this.redChannel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.redChannel.Location = new System.Drawing.Point(3, 3);
+            this.redChannel.Name = "redChannel";
+            this.redChannel.Size = new System.Drawing.Size(476, 255);
+            this.redChannel.TabIndex = 4;
+            // 
+            // greenChannel
+            // 
+            this.greenChannel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.greenChannel.Location = new System.Drawing.Point(485, 3);
+            this.greenChannel.Name = "greenChannel";
+            this.greenChannel.Size = new System.Drawing.Size(477, 255);
+            this.greenChannel.TabIndex = 5;
+            // 
+            // blueChannel
+            // 
+            this.blueChannel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.blueChannel.Location = new System.Drawing.Point(3, 264);
+            this.blueChannel.Name = "blueChannel";
+            this.blueChannel.Size = new System.Drawing.Size(476, 255);
+            this.blueChannel.TabIndex = 6;
+            // 
+            // lblMovieProgress
+            // 
+            this.lblMovieProgress.AutoSize = true;
+            this.lblMovieProgress.Enabled = false;
+            this.lblMovieProgress.Location = new System.Drawing.Point(78, 105);
+            this.lblMovieProgress.Name = "lblMovieProgress";
+            this.lblMovieProgress.Size = new System.Drawing.Size(0, 13);
+            this.lblMovieProgress.TabIndex = 17;
+            // 
+            // lblVideoTime
+            // 
+            this.lblVideoTime.AutoSize = true;
+            this.lblVideoTime.Location = new System.Drawing.Point(12, 105);
+            this.lblVideoTime.Name = "lblVideoTime";
+            this.lblVideoTime.Size = new System.Drawing.Size(60, 13);
+            this.lblVideoTime.TabIndex = 30;
+            this.lblVideoTime.Text = "Video Time";
+            // 
+            // tbFramePosition
+            // 
+            this.tbFramePosition.Location = new System.Drawing.Point(5, 82);
+            this.tbFramePosition.Name = "tbFramePosition";
+            this.tbFramePosition.Size = new System.Drawing.Size(161, 45);
+            this.tbFramePosition.TabIndex = 29;
+            this.tbFramePosition.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.tbFramePosition.Scroll += new System.EventHandler(this.tbFramePosition_Scroll);
+            this.tbFramePosition.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseDown);
+            this.tbFramePosition.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseUp);
             // 
             // lblMavLinkPosition
             // 
@@ -930,15 +1011,6 @@
             this.pictRecording.TabIndex = 18;
             this.pictRecording.TabStop = false;
             this.pictRecording.Visible = false;
-            // 
-            // lblMovieProgress
-            // 
-            this.lblMovieProgress.AutoSize = true;
-            this.lblMovieProgress.Enabled = false;
-            this.lblMovieProgress.Location = new System.Drawing.Point(78, 105);
-            this.lblMovieProgress.Name = "lblMovieProgress";
-            this.lblMovieProgress.Size = new System.Drawing.Size(0, 13);
-            this.lblMovieProgress.TabIndex = 17;
             // 
             // gbTrainingSet
             // 
@@ -1079,40 +1151,6 @@
             this.ribbonButton1.ToolTipTitle = null;
             this.ribbonButton1.Value = null;
             // 
-            // tbFramePosition
-            // 
-            this.tbFramePosition.Location = new System.Drawing.Point(5, 82);
-            this.tbFramePosition.Name = "tbFramePosition";
-            this.tbFramePosition.Size = new System.Drawing.Size(161, 45);
-            this.tbFramePosition.TabIndex = 29;
-            this.tbFramePosition.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.tbFramePosition.Scroll += new System.EventHandler(this.tbFramePosition_Scroll);
-            this.tbFramePosition.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseDown);
-            this.tbFramePosition.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tbFramePosition_MouseUp);
-            // 
-            // lblVideoTime
-            // 
-            this.lblVideoTime.AutoSize = true;
-            this.lblVideoTime.Location = new System.Drawing.Point(12, 105);
-            this.lblVideoTime.Name = "lblVideoTime";
-            this.lblVideoTime.Size = new System.Drawing.Size(60, 13);
-            this.lblVideoTime.TabIndex = 30;
-            this.lblVideoTime.Text = "Video Time";
-            // 
-            // imgTraining
-            // 
-            this.imgTraining.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imgTraining.FunctionalMode = Emgu.CV.UI.ImageBox.FunctionalModeOption.Minimum;
-            this.imgTraining.Location = new System.Drawing.Point(3, 3);
-            this.imgTraining.Name = "imgTraining";
-            this.imgTraining.Size = new System.Drawing.Size(965, 522);
-            this.imgTraining.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.imgTraining.TabIndex = 2;
-            this.imgTraining.TabStop = false;
-            this.imgTraining.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseDown);
-            this.imgTraining.MouseMove += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseMove);
-            this.imgTraining.MouseUp += new System.Windows.Forms.MouseEventHandler(this.imgTraining_MouseUp);
-            // 
             // frmSeaScanUAVMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1143,6 +1181,11 @@
             this.tbVideo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).EndInit();
             this.tbTraining.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).EndInit();
+            this.tbHistograms.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.imgHistogramImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbFramePosition)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbMavLink)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictRecording)).EndInit();
             this.gbTrainingSet.ResumeLayout(false);
@@ -1150,8 +1193,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.imgTrainingFrames)).EndInit();
             this.ssMain.ResumeLayout(false);
             this.ssMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbFramePosition)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgTraining)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1168,8 +1209,6 @@
         private System.Windows.Forms.RibbonPanel ribbonPanel1;
         private System.Windows.Forms.RibbonTab rtTraining;
         private System.Windows.Forms.RibbonPanel ribbonPanel2;
-        private System.Windows.Forms.RibbonButton cmdRewind;
-        private System.Windows.Forms.RibbonButton cmdFwd;
         private System.Windows.Forms.RibbonButton cmdPause;
         private System.Windows.Forms.RibbonButton cmdStop;
         private System.Windows.Forms.RibbonButton cmdPlay;
@@ -1238,6 +1277,12 @@
         private System.Windows.Forms.Label lblMavLinkPosition;
         private System.Windows.Forms.TrackBar tbFramePosition;
         private System.Windows.Forms.Label lblVideoTime;
+        private System.Windows.Forms.TabPage tbHistograms;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private Emgu.CV.UI.ImageBox imgHistogramImage;
+        private Emgu.CV.UI.HistogramBox redChannel;
+        private Emgu.CV.UI.HistogramBox greenChannel;
+        private Emgu.CV.UI.HistogramBox blueChannel;
 
      
     }

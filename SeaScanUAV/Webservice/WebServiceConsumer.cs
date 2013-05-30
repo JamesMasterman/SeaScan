@@ -58,11 +58,14 @@ namespace SeaScanUAV
                     ms.Close();
                 }
 
-                locations = aLocations.ToList();
+                if (aLocations != null)
+                {
+                    locations = aLocations.ToList();
+                }
             }
             catch (Exception e)
             {
-                throw;
+                throw e;
             }
             return locations;
         }
@@ -86,7 +89,10 @@ namespace SeaScanUAV
                     ms.Close();
                 }
 
-                users = aUsers.ToList();
+                if (aUsers != null)
+                {
+                    users = aUsers.ToList();
+                }
             }
             catch (Exception e)
             {
@@ -114,7 +120,10 @@ namespace SeaScanUAV
                     ms.Close();
                 }
 
-                cameras = aCameras.ToList();
+                if (aCameras != null)
+                {
+                    cameras = aCameras.ToList();
+                }
             }
             catch (Exception e)
             {
@@ -143,7 +152,10 @@ namespace SeaScanUAV
                     ms.Close();
                 }
 
-                planes = aPlanes.ToList();
+                if (aPlanes != null)
+                {
+                    planes = aPlanes.ToList();
+                }
             }
             catch (Exception e)
             {
@@ -172,7 +184,10 @@ namespace SeaScanUAV
                     ms.Close();
                 }
 
-                targets = aTargets.ToList();
+                if (aTargets != null)
+                {
+                    targets = aTargets.ToList();
+                }
             }
             catch (Exception e)
             {
@@ -336,7 +351,7 @@ namespace SeaScanUAV
         public string GetWebServiceData(string url)
         {
             lock (this)
-            {
+            {                
                 request = HttpWebRequest.Create(url) as HttpWebRequest;
                 request.Method = "GET";
                 string responseText = null;
@@ -369,16 +384,14 @@ namespace SeaScanUAV
                     // handle failures
                 }
                 catch (WebException e)
-                {
-
-                    System.Console.Write(response.StatusCode + " " + response.StatusDescription);
+                {                   
                     if (e.Response != null)
                     {
+                        System.Console.Write(response.StatusCode + " " + response.StatusDescription);
                         response = (HttpWebResponse)e.Response;
                     }
                     else
                     {
-
                         System.Console.Write(e.Message);
                     }
 

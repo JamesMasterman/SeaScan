@@ -71,7 +71,7 @@ namespace SeaScanUAV
                 startTime = sw.ElapsedMilliseconds;
                 long elapsed;
                 // Process.GetCurrentProcess().ProcessorAffinity = new IntPtr(2); // Uses the second Core 
-                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.High;  	// Prevents "Normal" processes 
+                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;  	// Prevents "Normal" processes 
 
 
                 while (isRunning)
@@ -82,7 +82,7 @@ namespace SeaScanUAV
                         if (elapsed >= Interval && isRunning)
                         {
 #if DEBUG
-                            //   Debug.WriteLine("Interval = " + Interval + ". Elapsed = " + elapsed.ToString());
+                               Debug.WriteLine("Interval = " + Interval + ". Elapsed = " + elapsed.ToString());
 #endif
                             startTime = sw.ElapsedMilliseconds;
                             if (startTime < 0)
